@@ -1,3 +1,10 @@
 pandas
 pytest
 streamlit
+spotipy
+python-dotenv
+requests
+librosa
+pyarrow
+google-genai
+sentence-transformers

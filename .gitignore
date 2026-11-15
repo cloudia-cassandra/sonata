@@ -7,6 +7,16 @@ __pycache__/
 .venv/
 env/
 venv/
+.env
+
+# Spotify OAuth token cache and downloaded audio previews
+.spotify_token_cache
+data/previews/
+data/my_taste.json
+.cache*
+
+# Local API call counter for sonata.rag
+logs/
 
 # OS files
 .DS_Store
