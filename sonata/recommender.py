@@ -18,7 +18,7 @@ from typing import Dict, List, Union
 import numpy as np
 import pandas as pd
 
-from sonata.analyze import CHROMA_NAMES, FEATURES_PATH, FEATURE_COLUMNS
+from sonata.features import CHROMA_NAMES, FEATURES_PATH, FEATURE_COLUMNS
 from sonata.catalog import LIBRARY_PATH, load_library
 
 SHARED_FEATURES = 2
@@ -113,12 +113,19 @@ def main() -> None:
     parser.add_argument("-k", type=int, default=10, help="number of recommendations")
     args = parser.parse_args()
 
-    for rank, result in enumerate(load_and_recommend(args.k), start=1):
+    print(format_recommendations(load_and_recommend(args.k)))
+
+
+def format_recommendations(results: List[Dict]) -> str:
+    """Readable text: each song, its closest liked song, and the two shared features."""
+    lines = []
+    for rank, result in enumerate(results, start=1):
         song, liked = result["song"], result["closest_liked"]
-        print(f"\n{rank}. {song['title']} by {song['artist']} ({song['genre'] or 'unknown genre'})")
-        print(f"   Similarity {result['similarity']:.2f} to {liked['title']} by {liked['artist']}")
-        for shared in result["shared_features"]:
-            print(f"     - {shared['description']}")
+        lines += ["" if rank > 1 else None,
+                  f"{rank}. {song['title']} by {song['artist']} ({song['genre'] or 'unknown genre'})",
+                  f"   Similarity {result['similarity']:.2f} to {liked['title']} by {liked['artist']}"]
+        lines += [f"     - {shared['description']}" for shared in result["shared_features"]]
+    return "\n".join(line for line in lines if line is not None)
 
 
 if __name__ == "__main__":

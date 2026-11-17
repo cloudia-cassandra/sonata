@@ -1,10 +1,23 @@
-pandas
-pytest
-streamlit
-spotipy
-python-dotenv
-requests
-librosa
-pyarrow
-google-genai
-sentence-transformers
+# Python 3.13. Versions pinned to the environment the tests and sample runs were produced in.
+
+# Data
+numpy==2.5.4
+pandas==3.1.1
+pyarrow==26.0.1
+
+# Spotify taste and Deezer library (only needed to rebuild the data)
+spotipy==2.26.0
+requests==2.34.2
+python-dotenv==1.2.4
+
+# Audio analysis (only needed to rebuild the data)
+librosa==1.0.1
+soundfile==0.14.0
+
+# RAG: embeddings and LLM
+sentence-transformers==6.3.0
+torch==2.15.0
+google-genai==3.3.0
+
+# Tests
+pytest==9.2.0

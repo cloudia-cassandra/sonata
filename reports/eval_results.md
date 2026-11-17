@@ -1,6 +1,6 @@
 # Sonata RAG evaluation
 
-Generated 2026-11-15 01:35 with provider `mock`; 10 queries × 3 runs.
+Generated 2026-11-15 23:09 with provider `mock`; 10 queries × 3 runs.
 
 | # | Query | Kind | Grounding | Consistency | Graceful | Avg confidence | Sources |
 |---|---|---|---|---|---|---|---|
@@ -20,7 +20,7 @@ Hallucinated songs dropped by the validator: 0. Exceptions: 0.
 
 **Checks.** Grounding: every recommended song was in that run's retrieved set. Consistency: mean pairwise overlap of the recommended songs across the 3 runs is at least 60%. Graceful: normal requests get 3-5 songs (a fallback must say why), empty or over-500-character input is rejected with a message, and nonsense gets a low-confidence notice instead of a model answer. Confidence is the retrieval score (0-1) of each recommended song.
 
-> **Note:** every run came from the mock provider, the response cache, a fallback or a rejection, which are all deterministic, so the consistency column is 100% by construction here. Run `python -m sonata.evaluate --fresh` with Gemini to measure the model's real run-to-run consistency.
+> **Note:** every run came from the mock provider, the response cache, a fallback or a rejection, which are all deterministic, so the consistency column is 100% by construction here. Run `python -m sonata evaluate --fresh` with Gemini to measure the model's real run-to-run consistency.
 
 ## Messages shown to the user
 

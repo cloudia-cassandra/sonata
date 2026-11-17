@@ -30,7 +30,7 @@ from typing import Callable, Dict, List, Optional
 import pandas as pd
 
 from sonata import rag
-from sonata.analyze import FEATURES_PATH
+from sonata.features import FEATURES_PATH
 from sonata.catalog import LIBRARY_PATH, load_library
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -215,7 +215,7 @@ def eval_markdown(rows: List[Dict], fresh: bool, runs: int = RUNS) -> str:
     if deterministic:
         lines += ["", "> **Note:** every run came from the mock provider, the response cache, a fallback or a "
                       "rejection, which are all deterministic, so the consistency column is 100% by "
-                      "construction here. Run `python -m sonata.evaluate --fresh` with Gemini to measure "
+                      "construction here. Run `python -m sonata evaluate --fresh` with Gemini to measure "
                       "the model's real run-to-run consistency."]
     notes = [(number, message) for number, row in enumerate(rows, start=1) for message in row["messages"]]
     notes += [(number, f"Exception: {error}") for number, row in enumerate(rows, start=1) for error in row["errors"]]
@@ -293,11 +293,19 @@ def main() -> None:
                         help="bypass the response cache for every run (real consistency test; costs API calls)")
     args = parser.parse_args()
     logging.basicConfig(level=logging.WARNING, format="%(levelname)s %(message)s")
+    print(run(fresh=args.fresh))
 
+
+def run(fresh: bool = False) -> str:
+    """Runs the evaluation and comparison, saves both reports, and returns the printable summary.
+
+    Raises SystemExit with a clear message if Gemini's remaining daily calls aren't enough.
+    """
+    lines = []
     settings = rag._settings()
     if settings["provider"] == "gemini":
-        needed, left = expected_calls(args.fresh), rag.MAX_CALLS_PER_DAY - rag.calls_today()
-        print(f"Gemini: up to {needed} calls needed (fewer if cached), {left} left today.")
+        needed, left = expected_calls(fresh), rag.MAX_CALLS_PER_DAY - rag.calls_today()
+        lines.append(f"Gemini: up to {needed} calls needed (fewer if cached), {left} left today.")
         if needed > left:
             raise SystemExit(f"Not starting: up to {needed} Gemini calls could be needed but only {left} are "
                              f"left today, so later runs would silently turn into fallbacks. Try again "
@@ -308,16 +316,16 @@ def main() -> None:
     ask_kwargs = {"library": library, "features": features}
 
     started = time.perf_counter()
-    rows = evaluate(rag.ask, fresh=args.fresh, **ask_kwargs)
-    report = eval_markdown(rows, args.fresh)
+    rows = evaluate(rag.ask, fresh=fresh, **ask_kwargs)
+    report = eval_markdown(rows, fresh)
     comparison = comparison_markdown(compare_audio(rag.ask, rag.audio_similarity(features, library), **ask_kwargs))
 
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     EVAL_REPORT.write_text(report, encoding="utf-8")
     COMPARISON_REPORT.write_text(comparison, encoding="utf-8")
-    print(report)
-    print(f"Saved {EVAL_REPORT.relative_to(PROJECT_ROOT)} and {COMPARISON_REPORT.relative_to(PROJECT_ROOT)} "
-          f"({time.perf_counter() - started:.1f}s)")
+    lines += [report, f"Saved {EVAL_REPORT.relative_to(PROJECT_ROOT)} and "
+                      f"{COMPARISON_REPORT.relative_to(PROJECT_ROOT)} ({time.perf_counter() - started:.1f}s)"]
+    return "\n".join(lines)
 
 
 if __name__ == "__main__":

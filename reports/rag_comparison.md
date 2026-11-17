@@ -1,6 +1,6 @@
 # Text-only vs. text + audio retrieval
 
-Generated 2026-11-15 01:35 with provider `mock`. **Before:** `use_audio=False`, songs ranked by text similarity only. **After:** `use_audio=True`, the top 24 text matches re-ranked by 70% text + 30% audio similarity to your closest liked song.
+Generated 2026-11-15 23:09 with provider `mock`. **Before:** `use_audio=False`, songs ranked by text similarity only. **After:** `use_audio=True`, the top 24 text matches re-ranked by 70% text + 30% audio similarity to your closest liked song.
 
 *Audio match* is the recommended songs' average audio similarity (cosine on standardized features) to their closest liked song, computed the same way for both columns; ♥ marks songs you already like.
 

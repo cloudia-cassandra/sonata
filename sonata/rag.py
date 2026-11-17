@@ -51,7 +51,7 @@ import numpy as np
 import pandas as pd
 from dotenv import load_dotenv
 
-from sonata.analyze import FEATURES_PATH
+from sonata.features import FEATURES_PATH
 from sonata.catalog import LIBRARY_PATH, load_library
 from sonata.recommender import standardize
 
@@ -496,7 +496,7 @@ def ask(query: str, use_audio: bool = True, *, library: Optional[List[Dict]] = N
     result["retrieved_ids"] = [item["song"]["deezer_id"] for item in retrieved]
 
     def fall_back(reason: str) -> Dict:
-        log.warning("%s; using retrieval-only results", reason)
+        log.warning("Retrieval-only results: %s", reason)
         result.update(source="fallback", message=reason, recommendations=fallback_picks(retrieved))
         return finish()
 
@@ -537,12 +537,20 @@ def main() -> None:
     result = ask(args.query, use_audio=not args.no_audio)
     if result["source"] == "rejected":
         raise SystemExit(result["message"])
-    print(f"\nSource: {result['source']}" + (f"\n{result['message']}" if result["message"] else ""))
+    print(format_result(result))
+
+
+def format_result(result: Dict) -> str:
+    """Readable text for an ask() result: source, any notice, then each song with reason and confidence."""
+    lines = [f"Source: {result['source']}"]
+    if result["message"]:
+        lines.append(result["message"])
     for rank, pick in enumerate(result["recommendations"], start=1):
         song = pick["song"]
         liked = " ♥" if song["liked"] else ""
-        print(f"\n{rank}. {song['title']} by {song['artist']}{liked}  (confidence {pick['confidence']:.2f})")
-        print(f"   {pick['reason']}")
+        lines += ["", f"{rank}. {song['title']} by {song['artist']}{liked}  (confidence {pick['confidence']:.2f})",
+                  f"   {pick['reason']}"]
+    return "\n".join(lines)
 
 
 if __name__ == "__main__":

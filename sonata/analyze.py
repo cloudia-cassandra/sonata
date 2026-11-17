@@ -21,18 +21,17 @@ import librosa
 import numpy as np
 import pandas as pd
 
+from sonata.features import CHROMA_NAMES, FEATURE_COLUMNS, FEATURES_PATH, N_MFCC  # noqa: F401 (re-exported)
+
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 LIBRARY_PATH = PROJECT_ROOT / "data" / "library.json"
 STARS_DIR = PROJECT_ROOT / "data" / "stars"
-FEATURES_PATH = PROJECT_ROOT / "data" / "features.parquet"
 
 SAMPLE_RATE = 22050
 HOP = 512                    # shared by every frame-based feature so frames line up
 CQT_FMIN_MIDI = 24           # C1, librosa's default CQT starting note
 CQT_BINS = 84                # 7 octaves, one bin per semitone: MIDI 24-107
 PITCH_WINDOW = 3             # frames after an onset to read the pitch from (~70 ms)
-N_MFCC = 13
-CHROMA_NAMES = ["C", "Cs", "D", "Ds", "E", "F", "Fs", "G", "Gs", "A", "As", "B"]
 
 # Tempo has a natural absolute scale, so it uses fixed BPM cut-offs.
 SLOW_BELOW_BPM = 90
@@ -42,11 +41,6 @@ FAST_FROM_BPM = 120
 ENERGY_LABELS = ("low", "medium", "high")
 BRIGHTNESS_LABELS = ("dark", "warm", "bright")
 
-FEATURE_COLUMNS = (
-    ["tempo", "rms_mean", "spectral_centroid"]
-    + [f"mfcc_{i}" for i in range(1, N_MFCC + 1)]
-    + [f"chroma_{name}" for name in CHROMA_NAMES]
-)
 
 log = logging.getLogger("analyze")
 

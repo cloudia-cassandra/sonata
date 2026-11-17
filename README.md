@@ -1,295 +1,287 @@
-# 🎵 Music Recommender Simulation
+# Sonata
 
-## Project Summary
+## Base Project
 
-In this project you will build and explain a small music recommender system.
+Sonata grows out of **VibeCheck 1.0 (Music Recommender Simulation)**, my project from Modules 1-3. VibeCheck was a purely content-based recommender. It scored each of 20 hand-made placeholder songs in `data/songs.csv` against a user profile: points for matching genre and mood, plus closeness in energy, valence and acousticness. It then returned the top 5 with a reason for every point. It also had switchable scoring modes (genre-first, mood-first and energy-focused) and an optional diversity penalty. It still runs unchanged with `python -m src.main`.
 
-Your goal is to:
+## Title and Summary
 
-- Represent songs and a user "taste profile" as data
-- Design a scoring rule that turns that data into recommendations
-- Evaluate what your system gets right and wrong
-- Reflect on how this mirrors real world AI recommenders
+**Sonata: songs picked from your real taste, explained.**
 
-Replace this paragraph with your own summary of what your version does.
+Sonata replaces the placeholder songs with real music. It reads my Spotify listening history, finds each song on Deezer along with a related-artist candidate pool, and analyzes their 30-second previews with librosa. It has two ways to recommend:
 
----
+- **`recommend`** is content-based. It ranks unheard songs by how close their audio features are to songs I already like, and says which liked song each one resembles and why.
+- **`ask "<request>"`** is retrieval-augmented generation (RAG). It finds the songs in my library that best match a plain-language request, and an LLM (Google Gemini) picks 3-5 of them with a one-sentence reason each. Guardrails make sure it can only recommend songs that were actually retrieved, and the whole pipeline is measured by an evaluation script.
 
-## How The System Works
+Both commands run from the committed data. They need no Spotify login, no MP3 files and no API key; without a key, `ask` uses mock mode or a retrieval-only fallback.
 
-Real-world platforms like Spotify and YouTube combine two approaches. **Collaborative filtering** learns from millions of users' behavior: plays, skips, likes and playlist adds ("people who liked this also liked that"). **Content-based filtering** compares the songs themselves: genre, mood, energy and other audio features. Collaborative filtering does most of the work at scale, while content-based filtering covers new songs and new users with no history. My simulation has no listening history, so it is purely **content-based**. It scores how closely each song's attributes match a user's taste profile, prioritizing **genre first, then energy, then mood**, and uses valence and acousticness to fine-tune the results.
+## Architecture Overview
 
-**Genre vs. mood weight:** a matching genre is worth **2.0 points** and a matching mood **1.0 point**. Genre is the most stable part of someone's taste: a rock fan rarely wants jazz, whatever the mood. Mood changes with the moment, and it mostly repeats what energy and valence already measure (for example, "chill" = low energy). The trade-off is that a strong genre match can outrank a better vibe match. "Gym Hero" (pop, intense) beats "Rooftop Lights" (indie pop, happy) for a happy pop fan, because "indie pop" doesn't count as "pop."
-
-### Features used
-
-**`Song`**
-- `genre` — compared to the user's favorite genre
-- `mood` — compared to the user's favorite mood
-- `energy` (0–1) — how calm or intense the song is
-- `valence` (0–1) — how dark or bright the song sounds
-- `acousticness` (0–1) — acoustic vs. electronic texture
-- `title`, `artist`, `id` — display only
-- `tempo_bpm`, `danceability` — loaded but not scored, because they mostly repeat energy in this dataset
-- **Advanced (optional):** `popularity` (0–100), `release_decade`, `mood_tags` (3 detailed tags, e.g. `cozy;rainy;calm`), `instrumentalness` (0–1) and `speechiness` (0–1). Each one is scored only if the user sets a matching preference. See the model card for the points.
-
-**`UserProfile`**
-- `favorite_genre`
-- `favorite_mood`
-- `target_energy` (0–1)
-- `target_valence` (0–1, optional)
-- `likes_acoustic` (True/False)
-
-### Data flow (planning design)
+The source is [diagrams/architecture.mmd](diagrams/architecture.mmd).
 
 ```mermaid
 flowchart TD
-    subgraph INPUT
-        CSV["data/songs.csv<br/>20 songs"] --> LOAD["load_songs()<br/>id → int, numbers → float"]
-        PREFS["user_prefs<br/>genre, mood, energy,<br/>valence, likes_acoustic"]
+    subgraph DATA["Data pipeline (offline, run once; needs Spotify login and the MP3 previews)"]
+        SPOTIFY["Spotify taste<br/>fetch_spotify_taste.py<br/>top tracks x3 time ranges + saved"]
+        TASTE[("data/my_taste.json")]
+        DEEZER["Deezer previews<br/>build_library.py<br/>liked songs + related-artist candidates"]
+        LIB[("data/library.json<br/>379 songs, liked true/false")]
+        MP3[("data/previews/*.mp3<br/>not committed")]
+        ANALYZE["Audio analysis<br/>analyze.py (librosa)<br/>onsets, CQT pitch, RMS, MFCC, chroma"]
+        FEAT[("data/features.parquet<br/>28 features per song")]
+        STARS[("data/stars/&lt;id&gt;.json<br/>star maps for the web UI")]
+        LABELS["tempo / energy / brightness labels<br/>written back to library.json"]
+
+        SPOTIFY --> TASTE --> DEEZER
+        DEEZER --> LIB
+        DEEZER --> MP3 --> ANALYZE
+        ANALYZE --> FEAT
+        ANALYZE --> STARS
+        ANALYZE --> LABELS --> LIB
     end
 
-    subgraph PROCESS["PROCESS: recommend_songs()"]
-        LOOP{"For each song"}
-        SCORE["score_song(prefs, song)"]
-        G["Genre match? +2.0 / 0"]
-        M["Mood match? +1.0 / 0"]
-        E["Energy closeness 0 to 2.0"]
-        V["Valence closeness 0 to 1.0"]
-        A["Acoustic fit 0 to 0.5"]
-        SUM["Total score + list of reasons"]
-        LOOP --> SCORE
-        SCORE --> G & M & E & V & A
-        G & M & E & V & A --> SUM
-        SUM -->|next song| LOOP
+    subgraph RAG["ask(query): runs from the committed data only"]
+        QUERY[/"User request<br/>python -m sonata ask"/]
+        INPUT{"Input guardrail<br/>empty or over 500 chars?"}
+        RETRIEVER["Retriever<br/>MiniLM text similarity, top 24<br/>re-ranked 70% text + 30% audio, keep 8"]
+        GATE{"Best match above<br/>MIN_RELEVANCE 0.40?"}
+        CACHE[("data/llm_cache/<br/>query + retrieved ids")]
+        QUOTA{"Real calls today<br/>under 18?"}
+        LLM["LLM<br/>Gemini via google-genai, or mock<br/>picks 3-5 songs from the list as JSON"]
+        VALIDATOR["Guardrail validator<br/>parse JSON, drop ids not retrieved<br/>(hallucinations), duplicates, empty reasons"]
+        FALLBACK["Retrieval-only fallback<br/>top retrieved songs + notice"]
+        OUTPUT[/"Output<br/>songs, reasons, confidence 0-1"/]
+        REJECT[/"Clear rejection message"/]
+        LOG[("logs/sonata.log<br/>logs/api_usage.json")]
+
+        QUERY --> INPUT
+        INPUT -->|yes| REJECT
+        INPUT -->|no| RETRIEVER --> GATE
+        GATE -->|no| FALLBACK
+        GATE -->|yes| CACHE
+        CACHE -->|hit, 0 calls| VALIDATOR
+        CACHE -->|miss| QUOTA
+        QUOTA -->|no| FALLBACK
+        QUOTA -->|yes| LLM --> VALIDATOR
+        LLM -->|rate limit, quota or API error| FALLBACK
+        VALIDATOR -->|valid picks| OUTPUT
+        VALIDATOR -->|nothing valid left| FALLBACK
+        FALLBACK --> OUTPUT
+        OUTPUT -.-> LOG
+        REJECT -.-> LOG
     end
 
-    subgraph OUTPUT["OUTPUT: the ranking"]
-        SORT["Sort all songs by score, highest first"]
-        TOPK["Keep top k = 5"]
-        PRINT["main.py prints title, score, Because: reasons"]
-        SORT --> TOPK --> PRINT
+    subgraph CONTENT["recommend: content-based, no LLM"]
+        RECOMMENDER["recommender.py<br/>cosine on standardized features<br/>candidates vs. closest liked song"]
+        TOP5[/"Top 5 + closest liked song<br/>+ 2 most-alike features"/]
+        RECOMMENDER --> TOP5
     end
 
-    LOAD --> LOOP
-    PREFS --> SCORE
-    LOOP -->|all songs scored| SORT
+    subgraph EVAL["Evaluation and review"]
+        EVALUATE["evaluate.py<br/>10 fixed queries x 3 runs<br/>grounding, consistency, graceful handling<br/>use_audio False vs. True"]
+        REPORTS[("reports/eval_results.md<br/>reports/rag_comparison.md")]
+        HUMAN(["Human review<br/>read reports, sample runs and logs;<br/>tune thresholds, prompt, taste list"])
+        EVALUATE --> REPORTS --> HUMAN
+    end
+
+    LIB --> RETRIEVER
+    FEAT --> RETRIEVER
+    LIB --> RECOMMENDER
+    FEAT --> RECOMMENDER
+    EVALUATE -->|calls ask| QUERY
+    LOG --> HUMAN
+    HUMAN -.->|adjust| RETRIEVER
+    HUMAN -.->|edit| TASTE
 ```
 
-`score_song` judges **one song at a time** and never sees the others. Songs are compared with each other only afterward, in the sort step.
+1. **Data pipeline** (run once, offline):
+   - `sonata.fetch_spotify_taste` saves my top and saved Spotify tracks.
+   - `sonata.build_library` finds each track on Deezer, downloads its preview and genre, and adds a pool of candidate songs from related artists.
+   - `sonata.analyze` turns every preview into a 28-number feature vector, a star map (one star per note onset) for the planned web UI, and readable tempo, energy and brightness labels.
+   - Everything except the MP3s is committed.
+2. **Retriever:**
+   - Each song gets a text description (title, artist, genre and labels), embedded with `all-MiniLM-L6-v2`.
+   - A request retrieves the 24 closest descriptions, which are re-ranked by 70% text similarity and 30% audio similarity to my liked songs. The best 8 go on.
+3. **LLM:** Gemini receives the request and only those 8 songs, and returns JSON picks with reasons. Responses are cached on disk, and real calls are capped at 18 a day.
+4. **Guardrail validator:**
+   - Checks the JSON and drops any song that wasn't retrieved, logging it as a hallucination.
+   - Falls back to the top retrieved songs, with a notice, whenever the model fails or nothing valid is left.
+5. **Evaluation and human review:**
+   - `sonata.evaluate` runs fixed queries and writes the reports in `reports/`.
+   - I read those reports, the sample runs and `logs/sonata.log` to decide what to tune.
 
-### Algorithm Recipe (final)
+## Setup Instructions
 
-**Scoring rule (one song).** Numerical features reward **closeness to the target**, not simply higher values, using `1 − |target − value|`:
-
-| Rule | Points |
-|---|---|
-| Genre matches the user's favorite genre | +2.0 |
-| Mood matches the user's favorite mood | +1.0 |
-| Energy closeness: `2.0 × (1 − \|target_energy − energy\|)` | 0 – 2.0 |
-| Valence closeness: `1.0 × (1 − \|target_valence − valence\|)` *(only if a target is set)* | 0 – 1.0 |
-| Acoustic fit: `0.5 × acousticness` if `likes_acoustic`, else `0.5 × (1 − acousticness)` | 0 – 0.5 |
-
-The maximum score is **6.5**. Each part of the score is recorded as a reason, so every recommendation can be explained.
-
-**Ranking rule (the list).** Every song in the catalog is scored, the songs are sorted from highest to lowest (ties keep their CSV order), and the top `k` (default 5) are returned with their scores and explanations.
-
-**Example:** for a lofi / chill / energy 0.40 / valence 0.60 / acoustic listener, *Library Rain* scores 2.0 + 1.0 + 1.90 + 1.00 + 0.43 = **6.33** (rank 1), and *Storm Runner* (rock, intense) scores **1.91** (rank 17).
-
-### Scoring modes
-
-The same rules can run with three different weight sets ("strategies"):
-
-| Mode | Genre | Mood | Energy | Other changes | Best for |
-|---|---|---|---|---|---|
-| `genre-first` *(default)* | 2.0 | 1.0 | 2.0 | — | Listeners loyal to one genre |
-| `mood-first` | 1.0 | 2.0 | 2.0 | valence 1.5, mood tags 0.75 each | "I want something sad / happy" listeners |
-| `energy-focused` | 0.5 | 0.5 | 4.0 | — | Workouts, studying, matching an activity |
-
-Switch modes with `python -m src.main --mode mood-first`, or change `DEFAULT_MODE` in `src/main.py`.
-
-### Diversity penalty (optional)
-
-Add `--diverse` to stop the top 5 from repeating artists or genres. Each song's score drops by **1.5 for every song by the same artist** and **0.75 for every song in the same genre** already in the list. The list is built one pick at a time, so penalties update after each pick. Example: `python -m src.main --mode mood-first --diverse`.
-
-### Expected biases
-
-- **Over-prioritizes genre.** A +2.0 genre match can outweigh a mismatched vibe. A "sad rocker" gets *Storm Runner* (intense, energy 0.91) at #2, ahead of calm, sad songs from other genres.
-- **Exact label matching.** "indie pop" ≠ "pop" and "focused" ≠ "chill", so great near-matches lose their bonus.
-- **Uneven catalog.** Lofi has 3 songs, but most genres and moods have only 1. Lofi/chill listeners get several strong matches; a metal or country fan gets one.
-- **Favors calm, acoustic songs twice.** Low energy and high acousticness usually go together in this data, so calm listeners get rewarded on both, and loud songs get penalized on both.
-- **Hand-picked values.** The song numbers are my estimates, so they carry my assumptions about genres (for example, metal = angry, low valence).
-- **One fixed taste.** Each user gets a single genre and mood, with no context such as time of day or activity.
-
----
-
-## Getting Started
-
-### Setup
-
-1. Create a virtual environment (optional but recommended):
+1. **Install** (Python 3.13):
 
    ```bash
    python -m venv .venv
-   source .venv/bin/activate      # Mac or Linux
-   .venv\Scripts\activate         # Windows
+   source .venv/bin/activate          # Windows: .venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
 
-2. Install dependencies
+2. **Configure (optional).** Without a `.env`, Sonata runs in mock mode and makes no API calls.
 
-```bash
-pip install -r requirements.txt
-```
+   ```bash
+   cp .env.example .env
+   ```
 
-3. Run the app:
+   To use Gemini, set `LLM_PROVIDER=gemini`, `LLM_MODEL` (a Gemini model name) and `GEMINI_API_KEY`. Real calls are capped at 18 a day and counted in `logs/api_usage.json`. Repeat requests are answered from `data/llm_cache/` for free.
 
-```bash
-python -m src.main
-```
+3. **Run.** The first `ask` downloads the small MiniLM model from Hugging Face once and caches the song embeddings. After that it runs offline (except for Gemini calls).
 
-### Running Tests
+   ```bash
+   python -m sonata ask "upbeat songs for a night drive"   # RAG; add --no-audio for text-only ranking
+   python -m sonata recommend                              # top 5 content-based picks; -k to change
+   python -m sonata evaluate                               # evaluation summary, rewrites reports/
+   ```
 
-Run the starter tests with:
+4. **Test.** All tests run in mock mode and never call the model.
 
-```bash
-pytest
-```
+   ```bash
+   pytest
+   ```
 
-You can add more tests in `tests/test_recommender.py`.
+5. **Rebuild the data from your own taste (optional).** This needs Spotify app credentials in `.env`, with the redirect URI `http://127.0.0.1:8888/callback` registered for your app.
 
----
+   ```bash
+   python -m sonata.fetch_spotify_taste   # opens a browser to log in; writes data/my_taste.json
+   python -m sonata.build_library         # Deezer search + previews; writes data/library.json
+   python -m sonata.analyze               # writes data/features.parquet, data/stars/, labels
+   ```
 
-## Sample Recommendation Output
+The original VibeCheck recommender still runs with `python -m src.main`.
 
-Output of `python -m src.main` for the default pop/happy profile:
+## Sample Interactions
 
-```
-Loaded 20 songs from data/songs.csv
-
-============================================================
-Top 5 recommendations
-Profile: genre=pop, mood=happy, energy=0.8
-============================================================
-
-1. Sunrise City by Neon Echo
-   Score: 4.96
-   Reasons:
-     - genre matches pop (+2.0)
-     - mood matches happy (+1.0)
-     - energy 0.82 vs target 0.80 (+1.96)
-
-2. Gym Hero by Max Pulse
-   Score: 3.74
-   Reasons:
-     - genre matches pop (+2.0)
-     - energy 0.93 vs target 0.80 (+1.74)
-
-3. Rooftop Lights by Indigo Parade
-   Score: 2.92
-   Reasons:
-     - mood matches happy (+1.0)
-     - energy 0.76 vs target 0.80 (+1.92)
-
-4. Fuego Lento by Los Caminos
-   Score: 2.00
-   Reasons:
-     - energy 0.80 vs target 0.80 (+2.00)
-
-5. Concrete Crown by K-Verse
-   Score: 1.96
-   Reasons:
-     - energy 0.78 vs target 0.80 (+1.96)
-
-============================================================
-```
-
-**Does this match expectations?** Mostly. *Sunrise City* is the only song that matches pop, happy *and* the target energy, so it's a clear #1. *Gym Hero* comes second on the genre bonus even though its mood is "intense," ahead of *Rooftop Lights*, which has the right mood but is "indie pop" rather than "pop." This is the genre over-prioritization noted in **Expected biases**. Ranks 4–5 have no label matches and qualify on energy alone.
-
-**Table view:** add `--table` for a compact summary with every reason inside the table (`python -m src.main --table`):
+These runs are from [assets/sample_runs.txt](assets/sample_runs.txt). They were produced from a clean copy of the committed files, with no `.env`, so the provider is `mock`. Retrieval, guardrails and confidence scores are real; the reasons are canned text built from each song's data. ♥ marks a song already in my liked songs.
 
 ```
-High-Energy Pop
-Profile: genre='pop', mood='happy', energy=0.8
-+---+------------------+-------+------------------------------------+
-| # | Song             | Score | Reasons                            |
-+===+==================+=======+====================================+
-| 1 | Sunrise City     |  4.96 | genre matches pop (+2.0)           |
-|   | by Neon Echo     |       | mood matches happy (+1.0)          |
-|   |                  |       | energy 0.82 vs target 0.80 (+1.96) |
-+---+------------------+-------+------------------------------------+
-| 2 | Gym Hero         |  3.74 | genre matches pop (+2.0)           |
-|   | by Max Pulse     |       | energy 0.93 vs target 0.80 (+1.74) |
-+---+------------------+-------+------------------------------------+
-| 3 | Rooftop Lights   |  2.92 | mood matches happy (+1.0)          |
-|   | by Indigo Parade |       | energy 0.76 vs target 0.80 (+1.92) |
-+---+------------------+-------+------------------------------------+
-| 4 | Fuego Lento      |  2.00 | energy 0.80 vs target 0.80 (+2.00) |
-|   | by Los Caminos   |       |                                    |
-+---+------------------+-------+------------------------------------+
-| 5 | Concrete Crown   |  1.96 | energy 0.78 vs target 0.80 (+1.96) |
-|   | by K-Verse       |       |                                    |
-+---+------------------+-------+------------------------------------+
-Top pick: Sunrise City, 1.22 points ahead of #2
+$ python -m sonata ask 'high energy reggaeton for a party'
+
+INFO Embedding 379 new song descriptions
+
+Source: mock
+
+1. 2 K 1 6 by Omar Courtz  (confidence 0.68)
+   [mock] 2 K 1 6 is Reggaeton with low energy, matching 'high energy reggaeton for a party'.
+
+2. Q U E V A S H A C E R H O Y ? by Omar Courtz ♥  (confidence 0.66)
+   [mock] Q U E V A S H A C E R H O Y ? is Reggaeton with medium energy, matching 'high energy reggaeton for a party'.
+
+3. Weeknd<3 by legallyrxx  (confidence 0.65)
+   [mock] Weeknd<3 is Reggaeton with low energy, matching 'high energy reggaeton for a party'.
 ```
 
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
+```
+$ python -m sonata ask 'sad slow songs for a rainy night'
 
----
+Source: mock
 
-## Experiments You Tried
+1. Hours In Silence by Drake ♥  (confidence 0.62)
+   [mock] Hours In Silence is Rap/Hip Hop with high energy, matching 'sad slow songs for a rainy night'.
 
-### Genre vs. mood weight
+2. underwater by FRANKIEONTHEGUITAR ♥  (confidence 0.59)
+   [mock] underwater is Pop with medium energy, matching 'sad slow songs for a rainy night'.
 
-I kept energy (×2.0), valence (×1.0) and acoustic (×0.5) fixed and changed only the genre and mood bonuses. Top 3 for three listeners:
+3. Drama (feat. Drake) by Roy Woods  (confidence 0.58)
+   [mock] Drama (feat. Drake) is R&B with low energy, matching 'sad slow songs for a rainy night'.
+```
 
-| Genre : Mood | Happy pop (pop/happy/0.8) | Study lofi (lofi/chill/0.4) | Sad rocker (rock/sad/0.3) |
-|---|---|---|---|
-| **2.0 : 1.0 (final)** | Sunrise City, Gym Hero, Rooftop Lights | Library Rain, Midnight Coding, Focus Flow | Paper Hearts, **Storm Runner**, Gray Morning Blues |
-| 1.5 : 1.5 | Sunrise City, Rooftop Lights, Gym Hero | Library Rain, Midnight Coding, Focus Flow | Paper Hearts, Gray Morning Blues, Storm Runner |
-| 1.0 : 2.0 | Sunrise City, Rooftop Lights, Gym Hero | Library Rain, Midnight Coding, Spacewalk Thoughts | Paper Hearts, Gray Morning Blues, Moonlit Prelude |
+```
+$ python -m sonata ask 'dark rap for the gym'
 
-**Takeaway:** with genre worth 2.0, a genre match can outweigh the vibe. The sad rocker gets Storm Runner (energy 0.91, intense) at #2 even though they asked for calm, sad music. Making mood worth more gives lists that fit the vibe better, but the user's named genre mostly disappears. I kept 2.0 : 1.0 as the final recipe because it respects stated genre loyalty, and I note this trade-off as a known limitation.
+Source: mock
 
-### Weight shift: energy ×2, genre ×½
+1. Hours In Silence by Drake ♥  (confidence 0.68)
+   [mock] Hours In Silence is Rap/Hip Hop with high energy, matching 'dark rap for the gym'.
 
-I changed `ENERGY_WEIGHT` from 2.0 to 4.0 and `GENRE_WEIGHT` from 2.0 to 1.0, then reran all 9 profiles. **Math check:** the maximum score becomes 7.5 (1 + 1 + 4 + 1 + 0.5). Scores for valid inputs stayed between 0 and 7.5, each song's reasons still add up to its score, and both tests pass.
+2. redrum by 21 Savage  (confidence 0.68)
+   [mock] redrum is Rap/Hip Hop with high energy, matching 'dark rap for the gym'.
 
-| Profile | Before (genre 2, energy 2) | After (genre 1, energy 4) | Verdict |
-|---|---|---|---|
-| High-Energy Pop | Sunrise City, **Gym Hero**, Rooftop Lights | Sunrise City, **Rooftop Lights**, Gym Hero | ✅ More accurate: the happy song now beats the intense one |
-| Chill Lofi | Library Rain, Midnight Coding, Focus Flow, Spacewalk Thoughts, Coffee Shop Stories | same order; Spacewalk Thoughts almost ties Focus Flow (5.18 vs 5.19) | ➖ Same |
-| Deep Intense Rock | …, Concrete Crown, **Night Drive Loop** | …, **Neon Euphoria**, Concrete Crown | ⚠️ Different: a euphoric EDM track enters on energy alone |
-| Energetic but Sad | **Paper Hearts**, then 4 loud songs | Storm Runner, Gym Hero, Neon Euphoria, Iron Tempest, **Sunrise City** | ⚠️ Different, not better: the only sad song drops out entirely, and a *happy* song enters |
-| Out-of-Range Energy (1.5) | Moonlit Prelude #1 | Moonlit Prelude gone; loud songs fill the list | ❌ The negative-score bug now does twice the damage |
-| Other 4 profiles | — | same songs in the same order | ➖ Same |
+3. 4 Raws by EsDeeKid ♥  (confidence 0.68)
+   [mock] 4 Raws is Rap/Hip Hop with high energy, matching 'dark rap for the gym'.
+```
 
-**Takeaway: mostly *different*, not more accurate.** Halving genre fixed the one case where genre was clearly too strong (Gym Hero over Rooftop Lights). But with energy now worth 53% of the maximum score, high-energy lists drift toward the same loud songs (Storm Runner, Gym Hero, Neon Euphoria, Iron Tempest) whatever genre or mood the user named. The "sad" preference is now ignored instead of overruling everything. The extremes swapped which preference gets ignored, rather than balancing them.
+## Design Decisions
 
----
+- **Spotify for taste, Deezer for audio.** Spotify gives an honest picture of what I listen to but no longer provides previews or audio features to new apps. Deezer's public API has 30-second previews, genres and related artists with no login. Matches must agree on the artist (similarity 0.85 or higher) before the title is compared, because title-only matches picked lullaby covers.
+- **My own audio features instead of Spotify's.** librosa computes tempo, loudness, brightness, 13 MFCCs (timbre) and 12 chroma values (harmony) for every preview.
+  - Tempo labels use fixed BPM cut-offs: below 90 is slow, 120 and above is fast.
+  - Energy and brightness labels are thirds of my library, because loudness depends on mastering. "High energy" therefore means loud *for my songs*.
+- **Cosine similarity on standardized features** for `recommend`. Z-scoring puts BPM and 0-1 chroma values on the same scale. Each candidate is scored against its *closest* liked song, not my average taste, so a mixed taste (reggaeton plus indie) isn't blurred into a middle that matches nothing. The per-feature terms of the cosine explain each match.
+- **The LLM never chooses from the whole catalog.** Retrieval narrows the library to 8 songs first, and the model may only pick from those. This keeps prompts small, makes every pick checkable, and makes a hallucinated song easy to detect and drop.
+- **A relevance gate before the model.** If the best text match is below 0.40, Sonata skips the model and returns low-confidence retrieval results with a notice. I set the threshold from real data: real requests scored 0.47-0.76, nonsense 0.12-0.34.
+- **Built around a free tier of about 20 requests a day:**
+  - A disk cache keyed by the query, the retrieved IDs, the model and the prompt version, so repeating a request costs nothing.
+  - A daily cap of 18 calls, counted *before* each call.
+  - Mock mode by default for development and every test.
+  - SDK retries and automatic function calling turned off, so one `ask` is at most one request.
+  - Any quota, rate-limit or network error becomes the retrieval-only fallback, never a crash.
+- **Confidence is the retrieval score, not the model's opinion.** LLMs are poorly calibrated about their own certainty. The similarity score is reproducible and means the same thing whether the answer came from Gemini, the cache or the fallback.
+- **The commands work from committed data.** Shared constants live in the lightweight `sonata/features.py`, so `ask`, `recommend` and `evaluate` never import librosa or spotipy.
 
-## Limitations and Risks
+## Testing Summary
 
-Summarize some limitations of your recommender.
+**Unit tests: 79 passing** (`pytest`). They cover:
 
-Examples:
+- Deezer matching, against the cover-version and remaster cases found in real data.
+- Audio analysis on synthetic notes with known pitches and onsets.
+- Feature standardization and the cosine recommender.
+- Retrieval and audio blending, with a fake offline embedder.
+- The validator: hallucinated, duplicate and malformed IDs, and bad JSON.
+- Cache, quota and 429 handling, against a fake Gemini SDK.
+- The evaluation metrics and the CLI.
 
-- It only works on a tiny catalog
-- It does not understand lyrics or language
-- It might over favor one genre or mood
+A shared fixture makes any real Gemini call inside a test raise an error.
 
-You will go deeper on this in your model card.
+**RAG evaluation** (`python -m sonata evaluate`, from [reports/eval_results.md](reports/eval_results.md)):
 
----
+| # | Query | Kind | Grounding | Consistency | Graceful | Avg confidence | Sources |
+|---|---|---|---|---|---|---|---|
+| 1 | high energy reggaeton for a party | normal | ✅ pass | ✅ pass (100%) | ✅ pass | 0.67 | mock |
+| 2 | chill songs to study to | normal | ✅ pass | ✅ pass (100%) | ✅ pass | 0.53 | mock |
+| 3 | sad slow songs for a rainy night | normal | ✅ pass | ✅ pass (100%) | ✅ pass | 0.60 | mock |
+| 4 | dark rap for the gym | normal | ✅ pass | ✅ pass (100%) | ✅ pass | 0.68 | mock |
+| 5 | songs like Bad Bunny | normal | ✅ pass | ✅ pass (100%) | ✅ pass | 0.63 | mock |
+| 6 | bright happy pop | normal | ✅ pass | ✅ pass (100%) | ✅ pass | 0.52 | mock |
+| 7 | music for a late night drive | normal | ✅ pass | ✅ pass (100%) | ✅ pass | 0.60 | mock |
+| 8 | *(empty)* | bad_input | ✅ pass | ✅ pass (100%) | ✅ pass | — | rejected |
+| 9 | asdkjh qwpoeiru zzxv | nonsense | ✅ pass | ✅ pass (100%) | ✅ pass | 0.38 | fallback |
+| 10 | play something play something play so… (599 chars) | bad_input | ✅ pass | ✅ pass (100%) | ✅ pass | — | rejected |
+| | **Total** | | **10/10** | **10/10** | **10/10** | **0.57** | |
+
+What the checks mean:
+
+- **Grounding:** every recommended song was in that run's retrieved set.
+- **Consistency:** the recommended songs overlap by at least 60% across the 3 runs.
+- **Graceful:** bad input is rejected with a message, and nonsense gets a low-confidence notice instead of a model answer.
+
+The validator dropped 0 hallucinated songs.
+
+These results come from the mock provider, so consistency is 100% by construction. `python -m sonata evaluate --fresh` measures Gemini's real run-to-run consistency, but it needs more calls than one day's cap allows.
+
+## RAG Enhancement
+
+**Audio re-ranking.** Retrieval originally ranked songs by text similarity alone. The enhancement re-ranks the top 24 text matches by blending 70% text similarity with 30% audio similarity to my closest liked song. This favors songs that both fit the words and *sound* like what I already listen to. The before/after below is from [reports/rag_comparison.md](reports/rag_comparison.md): `use_audio=False` before, `use_audio=True` after.
+
+| # | Query | Before: picks | After: picks | Overlap | Confidence before → after | Audio match before → after | ♥ before → after |
+|---|---|---|---|---|---|---|---|
+| 1 | high energy reggaeton for a p… (33 chars) | Weeknd<3 — legallyrxx<br>BAKANO — legallyrxx<br>RIGHT NOW — Lucho RK | 2 K 1 6 — Omar Courtz<br>Q U E V A S H A C E R H O Y ? — Omar Courtz ♥<br>Weeknd<3 — legallyrxx | 20% | 0.65 → 0.67 | 0.63 → 0.72 | 0 → 1 |
+| 2 | chill songs to study to | Did It First — Ice Spice ♥<br>Rein Me In — Sam Fender ♥<br>Scared — Russ ♥ | Did It First — Ice Spice ♥<br>Help Me Lose My Mind — Disclosure<br>Sin Frenos — Eladio Carrion ♥ | 20% | 0.45 → 0.53 | 0.64 → 0.72 | 3 → 2 |
+| 3 | sad slow songs for a rainy ni… (32 chars) | Nights — Frank Ocean ♥<br>the cure — Olivia Rodrigo<br>NO CRY — Kapo ♥ | Hours In Silence — Drake ♥<br>underwater — FRANKIEONTHEGUITAR ♥<br>Drama (feat. Drake) — Roy Woods | 0% | 0.52 → 0.60 | 0.59 → 0.84 | 2 → 2 |
+| 4 | dark rap for the gym | Runnin — 21 Savage<br>Scared — Russ ♥<br>Redbone — Childish Gambino | Hours In Silence — Drake ♥<br>redrum — 21 Savage<br>4 Raws — EsDeeKid ♥ | 0% | 0.62 → 0.68 | 0.61 → 0.88 | 1 → 2 |
+| 5 | songs like Bad Bunny | Party — Bad Bunny ♥<br>Moscow Mule — Bad Bunny ♥<br>Agosto — Bad Bunny ♥ | Andrea — Bad Bunny ♥<br>Efecto — Bad Bunny ♥<br>Party — Bad Bunny ♥ | 20% | 0.57 → 0.63 | 0.68 → 0.79 | 3 → 3 |
+| 6 | bright happy pop | LEGACY — PIXY ♥<br>Ella — Mishnrz ♥<br>Shiny — Easykid ♥ | LEGACY — PIXY ♥<br>la culpa (track 11) — alleh ♥<br>Antagonista — NSQK ♥ | 20% | 0.45 → 0.52 | 0.64 → 0.77 | 3 → 3 |
+| 7 | music for a late night drive | Nights — Frank Ocean ♥<br>Blind — OVI WOOD<br>Late Night Talking — Harry Styles ♥ | Static — Steve Lacy ♥<br>This Is America — Childish Gambino<br>JACKIE BROWN — Brent Faiyaz ♥ | 0% | 0.53 → 0.60 | 0.68 → 0.83 | 2 → 2 |
+| 8 | *(empty)* | *rejected* | *rejected* | 100% | — → — | — → — | 0 → 0 |
+| 9 | asdkjh qwpoeiru zzxv | Tu No Vive Asi (feat. Mambo Kingz & DJ Luian) — Arcángel<br>ZABKA — Azzfit<br>RANA POSTRZALOWA — Azzfit<br>Mopao aye (feat. MC YOSHI, Mauvais Djo & Kokosvoice) — TRIANGLE DES BERMUDES<br>7 Lágrimas (Remix) — Soge Culebra | ZABKA — Azzfit<br>Tu No Vive Asi (feat. Mambo Kingz & DJ Luian) — Arcángel<br>RANA POSTRZALOWA — Azzfit<br>Cmon (LATIN MAFIA & Fred edit) — Fred again.. ♥<br>Q U E V A S H A C E R H O Y ? — Omar Courtz ♥ | 43% | 0.22 → 0.38 | 0.75 → 0.80 | 0 → 2 |
+| 10 | play something play something… (599 chars) | *rejected* | *rejected* | 100% | — → — | — → — | 0 → 0 |
+
+**Averages over the 8 queries that returned songs:** overlap 15%, confidence 0.50 → 0.57, audio match 0.65 → 0.79, liked songs per answer 1.8 → 2.1.
+
+*Audio match* is the picks' average audio similarity to their closest liked song. Confidence is each column's own ranking score (text only before, the blend after), so the two confidence numbers are not on exactly the same scale.
+
+**What changed:** with audio re-ranking, the picks sound much more like my liked songs (audio match 0.65 → 0.79), and the answers change a lot (only 15% overlap). The re-ranking also has a cost, which shows in query 3: "sad slow songs for a rainy night" swaps Frank Ocean's "Nights" for Drake's high-energy "Hours In Silence". The audio term rewards sounding like *my* taste, which can override the mood the request asked for.
 
 ## Reflection
-
-Read and complete `model_card.md`:
-
-[**Model Card**](model_card.md)
-
-Write 1 to 2 paragraphs here about what you learned:
-
-- about how recommenders turn data into predictions
-- about where bias or unfairness could show up in systems like this
-
-
-
