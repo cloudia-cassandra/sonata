@@ -4,6 +4,7 @@ import { appear, circle, clamp, font, ink, reduceMotion, seededRandom, theme } f
 
 const PREVIEW_SECONDS = 30;
 const FLASH_MS = 700;          // how long a newly lit star glows
+const REVERB_LINGER = 2;       // with the effects panel's reverb at 100%, the glow lasts 1 + this times as long
 const SEEK_JUMP = 0.5;         // seconds per frame; bigger moves are seeks, which light stars without flashing
 const AXIS_HEIGHT = 34;        // px below the plot for the second markers
 const MIN_PITCH_SPAN = 24;     // semitones, so a narrow melody isn't stretched to fill the sky
@@ -338,6 +339,8 @@ function drawAxis() {
 function drawStars(now, current) {
   const alpha = ctx.globalAlpha;
   const placed = placedStars();
+  // fx.js publishes its reverb (0-1) on <html>; absent (effects off or failed) means 0, the plain flash
+  const flashMs = FLASH_MS * (1 + REVERB_LINGER * (Number(document.documentElement.dataset.fxReverb) || 0));
   state.stars.forEach((star, i) => {
     const { x, y, r } = placed[i];
     const litAt = state.litAt[i];
@@ -354,7 +357,7 @@ function drawStars(now, current) {
       return;
     }
 
-    const k = 1 - clamp((now - litAt) / FLASH_MS, 0, 1);   // 1 at the moment it lights, 0 when settled
+    const k = 1 - clamp((now - litAt) / flashMs, 0, 1);   // 1 at the moment it lights, 0 when settled
     if (k > 0) {
       const glowR = r * (2 + 4 * k);
       const glow = ctx.createRadialGradient(x, y, 0, x, y, glowR);
