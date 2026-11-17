@@ -1,72 +1,38 @@
 flowchart TD
-    subgraph DATA["Data pipeline (offline, run once; needs Spotify login and the MP3 previews)"]
-        SPOTIFY["Spotify taste<br/>fetch_spotify_taste.py<br/>top tracks x3 time ranges + saved"]
-        TASTE[("data/my_taste.json")]
-        DEEZER["Deezer previews<br/>build_library.py<br/>liked songs + related-artist candidates"]
-        LIB[("data/library.json<br/>379 songs, liked true/false")]
-        MP3[("data/previews/*.mp3<br/>not committed")]
-        ANALYZE["Audio analysis<br/>analyze.py (librosa)<br/>onsets, CQT pitch, RMS, MFCC, chroma"]
-        FEAT[("data/features.parquet<br/>28 features per song")]
-        STARS[("data/stars/&lt;id&gt;.json<br/>star maps for the web UI")]
-        LABELS["tempo / energy / brightness labels<br/>written back to library.json"]
-
-        SPOTIFY --> TASTE --> DEEZER
-        DEEZER --> LIB
-        DEEZER --> MP3 --> ANALYZE
-        ANALYZE --> FEAT
-        ANALYZE --> STARS
-        ANALYZE --> LABELS --> LIB
+    subgraph DATA["Data · offline, run once"]
+        SRC["Spotify taste → Deezer previews → librosa analysis"] --> LIB[("379 songs<br/>audio features + labels")]
     end
 
-    subgraph RAG["ask(query): runs from the committed data only"]
-        QUERY[/"User request<br/>python -m sonata ask"/]
-        INPUT{"Input guardrail<br/>empty or over 500 chars?"}
-        RETRIEVER["Retriever<br/>MiniLM text similarity, top 24<br/>strong matches first, 85% text + 15% taste, keep 8"]
-        GATE{"Best match above<br/>MIN_RELEVANCE 0.40?"}
-        CACHE[("data/llm_cache/<br/>query + retrieved ids")]
-        QUOTA{"Real calls today<br/>under 18?"}
-        LLM["LLM<br/>Gemini via google-genai, or mock<br/>picks 3-5 songs from the list as JSON"]
-        VALIDATOR["Guardrail validator<br/>parse JSON, drop ids not retrieved<br/>(hallucinations), duplicates, empty reasons"]
-        FALLBACK["Retrieval-only fallback<br/>top retrieved songs + notice"]
-        OUTPUT[/"Output<br/>songs, reasons, retrieval similarity 0-1"/]
-        REJECT[/"Clear rejection message"/]
-        LOG[("logs/sonata.log<br/>logs/api_usage.json")]
-
-        QUERY --> INPUT
-        INPUT -->|yes| REJECT
-        INPUT -->|no| RETRIEVER --> GATE
-        GATE -->|no| FALLBACK
-        GATE -->|yes| CACHE
-        CACHE -->|hit, 0 calls| VALIDATOR
-        CACHE -->|miss| QUOTA
-        QUOTA -->|no| FALLBACK
-        QUOTA -->|yes| LLM --> VALIDATOR
-        LLM -->|rate limit, quota or API error| FALLBACK
-        VALIDATOR -->|valid picks| OUTPUT
-        VALIDATOR -->|nothing valid left| FALLBACK
-        FALLBACK --> OUTPUT
-        OUTPUT -.-> LOG
-        REJECT -.-> LOG
+    subgraph AGENT["Agentic workflow · mood labeling"]
+        HAND["Hand labels<br/>sonata.label"] -->|15 examples| LABEL["1 · Label<br/>Gemini, 25 songs per call"]
+        LABEL --> CHECK{"2 · Check<br/>4 rules, no model"}
+        CHECK -->|flagged| FIX["3 · Fix<br/>Gemini sees the evidence"]
+        FIX --> RECHECK{"Re-check"}
+        RECHECK -->|still flagged| REVIEW(["4 · Human review<br/>sonata.review"])
+        CHECK -->|ok| MOODS[("Song moods<br/>hand labels always win")]
+        RECHECK -->|ok| MOODS
+        REVIEW --> HAND
+        HAND --> MOODS
     end
 
-    subgraph CONTENT["recommend: content-based, no LLM"]
-        RECOMMENDER["recommender.py<br/>cosine on standardized features<br/>candidates vs. closest liked song"]
-        TOP5[/"Top 5 + closest liked song<br/>+ 2 most-alike features"/]
-        RECOMMENDER --> TOP5
+    subgraph RAG["RAG workflow · sonata ask"]
+        Q[/"Request"/] --> RET["Retrieve 8 songs<br/>MiniLM: relevance first, 15% taste"]
+        RET --> LLM["Gemini picks 3-5 as JSON<br/>cache · 18 calls/day · mock by default"]
+        LLM --> VAL{"Guardrails<br/>only retrieved songs"}
+        VAL -->|valid| OUT[/"Songs + reasons<br/>+ retrieval similarity"/]
+        VAL -->|bad answer, API error,<br/>nothing matches| FB["Retrieval-only fallback"] --> OUT
     end
 
-    subgraph EVAL["Evaluation and review"]
-        EVALUATE["evaluate.py<br/>10 fixed queries x 3 runs<br/>grounding, consistency, graceful handling<br/>use_audio False vs. True"]
-        REPORTS[("reports/eval_results.md<br/>reports/rag_comparison.md")]
-        HUMAN(["Human review<br/>read reports, sample runs and logs;<br/>tune thresholds, prompt, taste list"])
-        EVALUATE --> REPORTS --> HUMAN
+    subgraph REC["Content-based · sonata recommend"]
+        COS["Cosine on audio features<br/>vs. closest liked song"] --> TOP[/"Top 5 + why"/]
     end
 
-    LIB --> RETRIEVER
-    FEAT --> RETRIEVER
-    LIB --> RECOMMENDER
-    FEAT --> RECOMMENDER
-    EVALUATE -->|calls ask| QUERY
-    LOG --> HUMAN
-    HUMAN -.->|adjust| RETRIEVER
-    HUMAN -.->|edit| TASTE
+    WEB["Web app · sonata.server<br/>galaxy · song skies · For you · Ask Sonata"]
+    EVAL["Evaluation<br/>reports/: RAG checks, agent vs. held-out hand labels"]
+
+    LIB --> HAND & LABEL & RET & COS
+    MOODS --> RET
+    OUT --> WEB
+    TOP --> WEB
+    OUT -.-> EVAL
+    MOODS -.-> EVAL
