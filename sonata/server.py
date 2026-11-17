@@ -145,7 +145,19 @@ def preview(file: str) -> FileResponse:
 
 
 # Last, so the API routes above take precedence over static files
-app.mount("/", StaticFiles(directory=WEB_DIR, html=True), name="web")
+class RevalidatedStaticFiles(StaticFiles):
+    """Static files the browser must re-check on every load. Without a Cache-Control header,
+    browsers may keep using a stale cached copy of a changed script (notably ES modules like
+    sky.js, imported by app.js), even across reloads. "no-cache" still lets them keep the copy;
+    they just ask first, and an unchanged file costs only a 304."""
+
+    def file_response(self, *args, **kwargs):
+        response = super().file_response(*args, **kwargs)
+        response.headers["Cache-Control"] = "no-cache"
+        return response
+
+
+app.mount("/", RevalidatedStaticFiles(directory=WEB_DIR, html=True), name="web")
 
 
 def main() -> None:

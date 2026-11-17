@@ -12,6 +12,33 @@ const INTRO_MS = 420;         // a newly loaded sky fades in...
 const INTRO_SWEEP_MS = 650;   // ...with its stars appearing left to right over this long
 const NOTE_NAMES = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"];
 
+// A natural-looking sky. Pitch is quantized to semitones and loudness is often similar, so a
+// repeated note would draw as a ruler-straight row of identical stars. Each star gets a fixed
+// scatter instead, seeded by the song and the star's index, so it's the same on every visit.
+// Only the drawing moves: lighting, the playhead and the note name use each star's real t and pitch.
+// Setting SKY_Y_SCATTER, SKY_DRIFT, SKY_X_JITTER, SKY_SIZE_JITTER, SKY_BRIGHTNESS_JITTER and
+// SKY_TWINKLE to 0 (and SKY_ARC_OPACITY to 1) gives back the strict grid exactly.
+const SKY_Y_SCATTER = 0.035;        // vertical scatter, a fraction of the sky's height; heavy-tailed:
+                                    // average of two randoms, and ~10% of stars get twice as much
+const SKY_CROWD_BOOST = 2.0;        // up to this multiple of extra scatter for crowded pitches (many stars
+                                    // within ±1 semitone): 1x at <=3 neighbors, full boost at >=10
+const SKY_DRIFT = 0.04;             // slow vertical drift along time, a fraction of the sky's height
+                                    // (three sine waves, ~7.3 s, 3.1 s and 1.7 s, seeded phases)
+const SKY_X_JITTER = 0.2;           // horizontal scatter, at most ± this many seconds' worth of pixels
+const SKY_SIZE_JITTER = 0.55;       // size multiplier 1 - j + 2j*random^1.8: skewed toward small stars
+const SKY_BRIGHTNESS_JITTER = 0.4;  // lit stars shine at between 1 - this and 1 (0.6-1.0)
+const SKY_TWINKLE = 0.15;           // slow opacity shimmer on unlit stars (each 3-8 s, own phase); lit stars hold steady
+const SKY_SHOW_ARC = true;          // the dashed pitch-trend curve across the sky
+const SKY_ARC_OPACITY = 0.5;        // multiplier on that curve's opacity
+const SKY_MIN_GAP = 1.5;            // px kept between neighboring stars after scattering...
+const SKY_MAX_NUDGE = 6;            // ...by pushing the later one aside at most this far
+
+const CROWD_FROM = 3;               // neighbors within ±1 semitone at which the crowd boost starts...
+const CROWD_FULL = 10;              // ...and reaches its full strength
+const TAIL_SHARE = 0.1;             // share of stars with the doubled, heavy-tail scatter
+const DRIFT_PERIODS = [7.3, 3.1, 1.7];
+const POSITION_SCATTER = SKY_Y_SCATTER > 0 || SKY_DRIFT > 0 || SKY_X_JITTER > 0;
+
 let ctx, audio, ui;
 
 const state = {
@@ -33,6 +60,9 @@ const state = {
   loadToken: 0,
   dragging: false,
   shownAt: Infinity,      // when the current star map arrived (drives the intro)
+  scatter: [],            // per star, fixed at load: {dY, dT, sizeMul, brightMul, twinkle*, nudgeAngle}
+  placed: [],             // per star, drawn position {x, y, r}; recomputed only when the layout changes
+  placedKey: "",
 };
 
 // ---------- helpers ----------
@@ -84,6 +114,103 @@ const yAt = (pitch) =>
   state.plot.y + state.plot.h - ((pitch - state.pitchLo) / (state.pitchHi - state.pitchLo)) * state.plot.h;
 const radiusOf = (size) => 1.3 + Math.sqrt(clamp(size, 0, 1)) * (state.rMax - 1.3);
 const timeAtX = (x) => clamp(((x - state.plot.x) / state.plot.w) * state.duration, 0, state.duration);
+
+// ---------- natural scatter ----------
+
+// How crowded each star's pitch is: 1 for notes with few neighbors within ±1 semitone,
+// rising to SKY_CROWD_BOOST for pitches the song keeps repeating
+function crowdBoosts(stars) {
+  const perPitch = new Map();
+  for (const star of stars) perPitch.set(star.pitch, (perPitch.get(star.pitch) || 0) + 1);
+  return stars.map((star) => {
+    const near = (perPitch.get(star.pitch - 1) || 0) + perPitch.get(star.pitch) + (perPitch.get(star.pitch + 1) || 0) - 1;
+    return 1 + (SKY_CROWD_BOOST - 1) * clamp((near - CROWD_FROM) / (CROWD_FULL - CROWD_FROM), 0, 1);
+  });
+}
+
+// Computed once per song. Every star draws the same nine random numbers whatever the settings
+// are, so tuning one constant never reshuffles the others. dY is a fraction of the sky's height.
+function scatterStars(stars, deezerId) {
+  const seed = deezerId % 4294967296;
+  const songRandom = seededRandom(seed ^ 0x5bd1e995);
+  const phases = DRIFT_PERIODS.map(() => songRandom() * Math.PI * 2);
+  // Slow drift along the song: neighbors in time drift together, like a band of the Milky Way
+  const drift = (t) =>
+    (SKY_DRIFT / DRIFT_PERIODS.length) *
+    DRIFT_PERIODS.reduce((sum, period, k) => sum + Math.sin((2 * Math.PI * t) / period + phases[k]), 0);
+  const crowd = crowdBoosts(stars);
+
+  return stars.map((star, i) => {
+    const random = seededRandom(seed ^ Math.imul(i + 1, 0x9e3779b1));
+    const [a, b, c, d, e, f, g, h, k] = Array.from({ length: 9 }, random);
+    const tail = c < TAIL_SHARE ? 2 : 1;
+    return {
+      dY: (a + b - 1) * SKY_Y_SCATTER * tail * crowd[i] + drift(star.t),
+      dT: (d * 2 - 1) * SKY_X_JITTER,
+      sizeMul: 1 - SKY_SIZE_JITTER + 2 * SKY_SIZE_JITTER * Math.pow(e, 1.8),
+      brightMul: 1 - f * SKY_BRIGHTNESS_JITTER,
+      twinklePhase: g * Math.PI * 2,
+      twinklePeriod: 3000 + h * 5000,              // ms
+      nudgeAngle: (k * 2 - 1) * Math.PI,           // which way to push a star that lands exactly on another
+    };
+  });
+}
+
+// Screen position and radius of every star, with the scatter applied and close neighbors
+// separated. Cached; redone only when something that moves stars on screen changes.
+function placedStars() {
+  const { plot, stars, scatter } = state;
+  const key = [plot.x, plot.y, plot.w, plot.h, state.duration, state.pitchLo, state.pitchHi, state.rMax, stars.length].join();
+  if (key === state.placedKey) return state.placed;
+
+  // Keep every star inside the sky. A star whose true position already touches an edge (e.g. a
+  // note at 0 s) may stay where it is, so with no scatter nothing moves at all.
+  const bounds = stars.map((star, i) => {
+    const r = radiusOf(star.size) * scatter[i].sizeMul;
+    const x0 = xAt(star.t);
+    const y0 = yAt(star.pitch);
+    return {
+      r,
+      left: Math.min(plot.x + r, x0), right: Math.max(plot.x + plot.w - r, x0),
+      top: Math.min(plot.y + r, y0), bottom: Math.max(plot.y + plot.h - r, y0),
+    };
+  });
+  const keepInside = (p, b) => {
+    p.x = clamp(p.x, b.left, b.right);
+    p.y = clamp(p.y, b.top, b.bottom);
+  };
+  const placed = stars.map((star, i) => {
+    const p = { x: xAt(star.t + scatter[i].dT), y: yAt(star.pitch) - scatter[i].dY * plot.h, r: bounds[i].r };
+    keepInside(p, bounds[i]);
+    return p;
+  });
+
+  // With no positional scatter, keep the original look exactly (repeated notes overlap there too)
+  if (POSITION_SCATTER) {
+    const pxPerSecond = plot.w / state.duration;
+    const reach = 2 * state.rMax * (1 + SKY_SIZE_JITTER) + SKY_MIN_GAP + SKY_MAX_NUDGE + 2 * SKY_X_JITTER * pxPerSecond;
+    for (let i = 1; i < placed.length; i++) {
+      const p = placed[i];
+      // Stars are in time order, so only the few just before this one can be close to it
+      for (let j = i - 1; j >= 0 && (stars[i].t - stars[j].t) * pxPerSecond <= reach; j--) {
+        const q = placed[j];
+        const dx = p.x - q.x;
+        const dy = p.y - q.y;
+        const dist = Math.hypot(dx, dy);
+        const need = p.r + q.r + SKY_MIN_GAP;
+        if (dist >= need) continue;
+        const push = Math.min(need - dist, SKY_MAX_NUDGE);
+        const angle = dist > 0.01 ? Math.atan2(dy, dx) : scatter[i].nudgeAngle;
+        p.x += Math.cos(angle) * push;
+        p.y += Math.sin(angle) * push;
+        keepInside(p, bounds[i]);
+      }
+    }
+  }
+  state.placed = placed;
+  state.placedKey = key;
+  return placed;
+}
 
 // ---------- setup ----------
 
@@ -173,11 +300,11 @@ function drawSpecks() {
 }
 
 function drawTrend() {
-  if (!state.trend) return;
+  if (!state.trend || !SKY_SHOW_ARC) return;
   const [c0, c1, c2] = state.trend;
   ctx.save();
   ctx.setLineDash([4, 7]);
-  ctx.strokeStyle = ink(0.28);
+  ctx.strokeStyle = ink(0.28 * SKY_ARC_OPACITY);
   ctx.lineWidth = 1;
   ctx.beginPath();
   for (let i = 0; i <= 80; i++) {
@@ -210,16 +337,19 @@ function drawAxis() {
 
 function drawStars(now, current) {
   const alpha = ctx.globalAlpha;
+  const placed = placedStars();
   state.stars.forEach((star, i) => {
-    const x = xAt(star.t);
-    const y = yAt(star.pitch);
-    const r = radiusOf(star.size);
+    const { x, y, r } = placed[i];
     const litAt = state.litAt[i];
     const shown = appear(now, state.shownAt, 320, (star.t / state.duration) * INTRO_SWEEP_MS);
     if (shown <= 0) return;
     ctx.globalAlpha = alpha * shown;
 
     if (litAt === null) {
+      if (SKY_TWINKLE > 0 && !reduceMotion) {
+        const { twinklePhase, twinklePeriod } = state.scatter[i];
+        ctx.globalAlpha = alpha * shown * (1 - SKY_TWINKLE * (0.5 + 0.5 * Math.sin((2 * Math.PI * now) / twinklePeriod + twinklePhase)));
+      }
       circle(ctx, x, y, r * (0.4 + 0.6 * shown), theme.starDim);
       return;
     }
@@ -232,6 +362,7 @@ function drawStars(now, current) {
       glow.addColorStop(1, ink(0));
       circle(ctx, x, y, glowR, glow);
     }
+    ctx.globalAlpha = alpha * shown * state.scatter[i].brightMul;
     circle(ctx, x, y, r * (1 + 0.5 * k * k), theme.ink);
   });
   ctx.globalAlpha = alpha;
@@ -239,9 +370,7 @@ function drawStars(now, current) {
   // The latest star: an accent ring and its note name
   if (current >= 0) {
     const star = state.stars[current];
-    const x = xAt(star.t);
-    const y = yAt(star.pitch);
-    const r = radiusOf(star.size);
+    const { x, y, r } = placed[current];
     ctx.strokeStyle = theme.accent;
     ctx.lineWidth = 1.5;
     ctx.beginPath();
@@ -321,6 +450,8 @@ export async function load(track) {
   state.track = track;
   state.stars = [];                                // don't show the previous song's sky while loading
   state.litAt = [];
+  state.scatter = [];
+  state.placedKey = "";
   state.trend = null;
   state.shownAt = Infinity;
   replayEntrance(ui.titles);
@@ -357,6 +488,8 @@ export async function load(track) {
   Object.assign(state, {
     stars,
     litAt: stars.map(() => null),
+    scatter: scatterStars(stars, track.deezer_id),
+    placedKey: "",
     pitchLo: lo,
     pitchHi: hi,
     duration: Math.max(PREVIEW_SECONDS, Math.ceil(lastT)),

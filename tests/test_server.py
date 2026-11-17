@@ -74,6 +74,9 @@ def test_web_ui_is_served_at_root(client):
         assert client.get(f"/{asset}").status_code == 200, asset
     # ES modules must be served as JavaScript or the browser refuses to run them
     assert "javascript" in client.get("/app.js").headers["content-type"]
+    # ...and re-checked on every load, so an edited module is never served stale from cache
+    assert client.get("/sky.js").headers["cache-control"] == "no-cache"
+    assert client.get("/").headers["cache-control"] == "no-cache"
 
 
 def test_real_library_loads():
