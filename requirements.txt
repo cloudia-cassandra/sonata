@@ -10,14 +10,20 @@ spotipy==2.26.0
 requests==2.34.2
 python-dotenv==1.2.4
 
-# Audio analysis (only needed to rebuild the data)
+# Audio analysis and galaxy layout (only needed to rebuild the data)
 librosa==1.0.1
 soundfile==0.14.0
+umap-learn==0.6.0
 
 # RAG: embeddings and LLM
 sentence-transformers==6.3.0
 torch==2.15.0
 google-genai==3.3.0
 
+# Web UI (the song sky)
+fastapi==0.163.1
+uvicorn==0.54.0
+
 # Tests
 pytest==9.2.0
+httpx==0.28.1

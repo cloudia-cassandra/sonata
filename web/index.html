@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en" class="instant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sonata</title>
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0d0c0b">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="stage" role="img" aria-label="Galaxy of your library"></canvas>
+  <audio id="audio" preload="auto"></audio>
+  <div id="tooltip" class="tooltip" aria-hidden="true">
+    <strong id="tip-title"></strong>
+    <span id="tip-meta"></span>
+  </div>
+
+  <main>
+    <!-- Home: the galaxy, one star per song -->
+    <section id="galaxy-view" class="frame view is-active" aria-label="Galaxy">
+      <header class="head">
+        <div class="titles">
+          <h1>Your galaxy</h1>
+          <p id="g-counter" class="counter is-loading">
+            <span id="g-liked" class="accent">–</span> liked<span class="of"> · <span id="g-total">–</span> songs</span>
+          </p>
+        </div>
+        <div class="controls">
+          <label class="visually-hidden" for="g-find">Open a song</label>
+          <select id="g-find"><option value="">Find a song…</option></select>
+          <button id="recenter" type="button">Recenter</button>
+          <button id="for-you-toggle" class="only-phone" type="button" aria-controls="for-you" aria-expanded="false">For you</button>
+        </div>
+      </header>
+
+      <div class="galaxy-main">
+        <div id="galaxy-area" class="plot galaxy-area">
+          <p id="galaxy-loading" class="galaxy-loading is-working">Loading your galaxy</p>
+          <!-- Ask Sonata floats over the bottom of the galaxy; answers appear as cards above it -->
+          <div id="ask" class="ask">
+            <div id="answers" class="answers" hidden aria-live="polite">
+              <div class="answers-head">
+                <p id="answers-status" class="answers-status"></p>
+                <button id="answers-clear" type="button" class="text-button">Clear</button>
+              </div>
+              <ol id="answer-cards" class="cards"></ol>
+            </div>
+            <form id="ask-form" class="ask-form">
+              <label class="visually-hidden" for="ask-input">Ask Sonata for songs</label>
+              <input id="ask-input" type="text" maxlength="500" autocomplete="off" spellcheck="false" enterkeyhint="send"
+                     placeholder="Ask Sonata… “sad slow songs for a rainy night”">
+              <button id="ask-button" type="submit"><span class="spinner" aria-hidden="true"></span><span class="label">Ask</span></button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Side panel on laptops; a bottom sheet on phones -->
+        <aside id="for-you" class="panel" aria-labelledby="for-you-title">
+          <div class="panel-head">
+            <h2 id="for-you-title" class="label accent">For you</h2>
+            <button id="for-you-close" class="text-button only-phone" type="button">Close</button>
+          </div>
+          <p class="panel-sub">New songs that sound like ones you like</p>
+          <ol id="rec-list" class="rec-list" aria-busy="true"></ol>
+        </aside>
+      </div>
+
+      <footer class="foot">
+        <ul class="legend" aria-label="Legend">
+          <li><span class="dot dot-lit" aria-hidden="true"></span>Liked</li>
+          <li><span class="dot" aria-hidden="true"></span>To discover</li>
+          <li><span class="dot dot-accent" aria-hidden="true"></span>For you</li>
+          <li class="legend-note">Closer stars sound more alike</li>
+        </ul>
+        <p id="g-hint" class="hint">
+          <span class="hint-pointer">Drag to pan · scroll to zoom · click a star to open its sky</span>
+          <span class="hint-touch">Pinch to zoom · tap a star to open its sky</span>
+        </p>
+        <div class="wordmark" aria-hidden="true">sonata<span class="accent">.</span></div>
+      </footer>
+    </section>
+
+    <!-- One song: its notes as stars -->
+    <section id="sky-view" class="frame view" aria-label="Song sky">
+      <header class="head">
+        <div id="sky-titles" class="titles">
+          <h1 id="title">Sonata</h1>
+          <p id="sky-counter" class="counter">
+            <span id="lit" class="accent">0</span><span class="of"> / <span id="total">0</span></span> stars
+          </p>
+        </div>
+        <div class="controls">
+          <button id="back" type="button" aria-label="Back to the galaxy"><span class="icon" aria-hidden="true">←</span><span class="label">Galaxy</span></button>
+          <label class="visually-hidden" for="song">Song</label>
+          <select id="song"></select>
+          <button id="play" type="button" disabled>
+            <span class="icon" aria-hidden="true">▶</span><span class="label">Play</span>
+          </button>
+        </div>
+      </header>
+
+      <div id="plot" class="plot"></div>
+
+      <div id="manual" class="manual" hidden>
+        <input id="scrub" type="range" min="0" max="30" step="0.01" value="0" aria-label="Position in the song, in seconds">
+        <p id="hint" class="hint">No preview for this song. Drag to light the stars.</p>
+      </div>
+
+      <footer class="foot">
+        <dl class="stats">
+          <div><dt class="label">Artist</dt><dd id="artist">—</dd></div>
+          <div><dt class="label">Genre</dt><dd id="genre">—</dd></div>
+          <div><dt class="label">Tempo</dt><dd id="tempo">—</dd></div>
+          <div><dt class="label">Time</dt><dd id="time">0:00</dd></div>
+        </dl>
+        <div class="wordmark" aria-hidden="true">sonata<span class="accent">.</span></div>
+      </footer>
+    </section>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

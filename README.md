@@ -134,7 +134,14 @@ flowchart TD
    python -m sonata ask "upbeat songs for a night drive"   # RAG; add --no-audio for text-only ranking
    python -m sonata recommend                              # top 5 content-based picks; -k to change
    python -m sonata evaluate                               # evaluation summary, rewrites reports/
+   python -m sonata.server                                 # galaxy and song skies at http://127.0.0.1:8000
    ```
+
+   The home page is your **galaxy**: one star per song, laid out by UMAP so songs that sound alike sit close together. Liked songs are bright, the rest dim. Drag to pan, scroll or pinch to zoom, and hover for the title and artist.
+
+   Orange stars are the five content-based recommendations, each joined by a thin line to the liked song it sounds closest to and listed in the **For you** panel. The **Ask Sonata** box runs the RAG pipeline: answers appear as cards with their reason and confidence, and their stars light up. The page uses the same functions as the CLI through `GET /api/recommendations` and `POST /api/ask`, so the same mock mode, cache and daily limit apply.
+
+   Clicking a star dives into that song's **sky**: one star per note onset, placed by time and pitch and sized by loudness. Stars light up as the preview plays; without the MP3 previews, a scrub bar replaces playback. The ← Galaxy button, Escape or the browser's back button returns to the galaxy.
 
 4. **Test.** All tests run in mock mode and never call the model.
 
@@ -148,6 +155,7 @@ flowchart TD
    python -m sonata.fetch_spotify_taste   # opens a browser to log in; writes data/my_taste.json
    python -m sonata.build_library         # Deezer search + previews; writes data/library.json
    python -m sonata.analyze               # writes data/features.parquet, data/stars/, labels
+   python -m sonata.compute_galaxy        # UMAP layout: writes x, y per song into data/library.json
    ```
 
 The original VibeCheck recommender still runs with `python -m src.main`.

@@ -9,7 +9,9 @@
     "liked": true,
     "tempo_label": "slow",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.5125,
+    "y": -0.2229
   },
   {
     "deezer_id": 3728608642,
@@ -21,7 +23,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.6347,
+    "y": 0.742
   },
   {
     "deezer_id": 4140363891,
@@ -33,7 +37,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.7588,
+    "y": -0.2366
   },
   {
     "deezer_id": 2265085,
@@ -45,7 +51,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.6926,
+    "y": -0.5015
   },
   {
     "deezer_id": 3804387542,
@@ -57,7 +65,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.902,
+    "y": -0.3388
   },
   {
     "deezer_id": 4223792382,
@@ -69,7 +79,9 @@
     "liked": true,
     "tempo_label": "slow",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.1117,
+    "y": -0.5978
   },
   {
     "deezer_id": 2981302361,
@@ -81,7 +93,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.5273,
+    "y": 0.5842
   },
   {
     "deezer_id": 4242078772,
@@ -93,7 +107,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.5525,
+    "y": -0.8449
   },
   {
     "deezer_id": 3981862771,
@@ -105,7 +121,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.4704,
+    "y": 0.3347
   },
   {
     "deezer_id": 4151325392,
@@ -117,7 +135,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.7612,
+    "y": -0.5558
   },
   {
     "deezer_id": 4299155452,
@@ -129,7 +149,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.7106,
+    "y": -0.1182
   },
   {
     "deezer_id": 2348934745,
@@ -141,7 +163,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.3375,
+    "y": 0.6961
   },
   {
     "deezer_id": 533609342,
@@ -153,7 +177,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.028,
+    "y": -0.0488
   },
   {
     "deezer_id": 3913607801,
@@ -165,7 +191,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.5517,
+    "y": -0.21
   },
   {
     "deezer_id": 17347961,
@@ -177,7 +205,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.0735,
+    "y": -0.5419
   },
   {
     "deezer_id": 4295078672,
@@ -189,7 +219,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.3724,
+    "y": 0.5051
   },
   {
     "deezer_id": 3981869871,
@@ -201,7 +233,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.6766,
+    "y": -0.7203
   },
   {
     "deezer_id": 717273922,
@@ -213,7 +247,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.3588,
+    "y": -0.8066
   },
   {
     "deezer_id": 2881692482,
@@ -225,7 +261,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.5435,
+    "y": -0.5477
   },
   {
     "deezer_id": 4242078572,
@@ -237,7 +275,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.6001,
+    "y": 0.2814
   },
   {
     "deezer_id": 1817216147,
@@ -249,7 +289,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.1385,
+    "y": 0.8995
   },
   {
     "deezer_id": 4293661332,
@@ -261,7 +303,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.8226,
+    "y": 0.1735
   },
   {
     "deezer_id": 3651959272,
@@ -273,7 +317,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.1047,
+    "y": -0.6221
   },
   {
     "deezer_id": 2912340531,
@@ -285,7 +331,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.8713,
+    "y": 0.0204
   },
   {
     "deezer_id": 3399233781,
@@ -297,7 +345,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.5217,
+    "y": 0.6674
   },
   {
     "deezer_id": 2857437202,
@@ -309,7 +359,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.8833,
+    "y": -0.2856
   },
   {
     "deezer_id": 17347977,
@@ -321,7 +373,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.5448,
+    "y": 0.8665
   },
   {
     "deezer_id": 107425674,
@@ -333,7 +387,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.5653,
+    "y": 0.8262
   },
   {
     "deezer_id": 17881414,
@@ -345,7 +401,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.0619,
+    "y": 0.7905
   },
   {
     "deezer_id": 4208859922,
@@ -357,7 +415,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.2767,
+    "y": -0.2484
   },
   {
     "deezer_id": 3553677361,
@@ -369,7 +429,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.4657,
+    "y": 0.5012
   },
   {
     "deezer_id": 1168838542,
@@ -381,7 +443,9 @@
     "liked": true,
     "tempo_label": "slow",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.2082,
+    "y": 0.6681
   },
   {
     "deezer_id": 1792992207,
@@ -393,7 +457,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.1163,
+    "y": 0.8503
   },
   {
     "deezer_id": 633377802,
@@ -405,7 +471,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.4306,
+    "y": -0.1806
   },
   {
     "deezer_id": 17347964,
@@ -417,7 +485,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.3206,
+    "y": 0.4305
   },
   {
     "deezer_id": 1766771527,
@@ -429,7 +499,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.9298,
+    "y": -0.2852
   },
   {
     "deezer_id": 3593125752,
@@ -441,7 +513,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.6353,
+    "y": 0.7211
   },
   {
     "deezer_id": 1999525127,
@@ -453,7 +527,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.5052,
+    "y": 0.6419
   },
   {
     "deezer_id": 7675651,
@@ -465,7 +541,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.6331,
+    "y": -0.1985
   },
   {
     "deezer_id": 3376766301,
@@ -477,7 +555,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.8604,
+    "y": -0.441
   },
   {
     "deezer_id": 3856864621,
@@ -489,7 +569,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.4828,
+    "y": -0.0371
   },
   {
     "deezer_id": 144572248,
@@ -501,7 +583,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.0858,
+    "y": -0.3709
   },
   {
     "deezer_id": 533609322,
@@ -513,7 +597,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.09,
+    "y": 0.776
   },
   {
     "deezer_id": 17347969,
@@ -525,7 +611,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.11,
+    "y": 0.759
   },
   {
     "deezer_id": 2349426035,
@@ -537,7 +625,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.7958,
+    "y": -0.1328
   },
   {
     "deezer_id": 70697358,
@@ -549,7 +639,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.2263,
+    "y": 0.8586
   },
   {
     "deezer_id": 3427618681,
@@ -561,7 +653,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.6661,
+    "y": -0.0462
   },
   {
     "deezer_id": 4195078852,
@@ -573,7 +667,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.6238,
+    "y": 0.0953
   },
   {
     "deezer_id": 1328391212,
@@ -585,7 +681,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.8276,
+    "y": 0.0181
   },
   {
     "deezer_id": 2291790485,
@@ -597,7 +695,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.145,
+    "y": 0.8985
   },
   {
     "deezer_id": 3958052091,
@@ -609,7 +709,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.5374,
+    "y": 0.4599
   },
   {
     "deezer_id": 3166652991,
@@ -621,7 +723,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.1,
+    "y": 0.3353
   },
   {
     "deezer_id": 3399233871,
@@ -633,7 +737,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.6545,
+    "y": 0.7996
   },
   {
     "deezer_id": 799266592,
@@ -645,7 +751,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.2668,
+    "y": 0.4286
   },
   {
     "deezer_id": 2473525051,
@@ -657,7 +765,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.5683,
+    "y": 0.0338
   },
   {
     "deezer_id": 3165862381,
@@ -669,7 +779,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.804,
+    "y": -0.527
   },
   {
     "deezer_id": 4195078762,
@@ -681,7 +793,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.369,
+    "y": 0.6499
   },
   {
     "deezer_id": 1012521062,
@@ -693,7 +807,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.827,
+    "y": 0.0319
   },
   {
     "deezer_id": 1529340792,
@@ -705,7 +821,9 @@
     "liked": true,
     "tempo_label": "slow",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.9779,
+    "y": -0.2694
   },
   {
     "deezer_id": 3713785942,
@@ -717,7 +835,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.7105,
+    "y": -0.3588
   },
   {
     "deezer_id": 4195078732,
@@ -729,7 +849,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.6693,
+    "y": -0.2707
   },
   {
     "deezer_id": 4059095211,
@@ -741,7 +863,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.2578,
+    "y": 0.8669
   },
   {
     "deezer_id": 3393136571,
@@ -753,7 +877,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.6296,
+    "y": -0.725
   },
   {
     "deezer_id": 3168057441,
@@ -765,7 +891,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.4276,
+    "y": 0.5416
   },
   {
     "deezer_id": 3406148371,
@@ -777,7 +905,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.5591,
+    "y": -0.5511
   },
   {
     "deezer_id": 2526385071,
@@ -789,7 +919,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.7762,
+    "y": 0.2224
   },
   {
     "deezer_id": 3416737961,
@@ -801,7 +933,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.7031,
+    "y": -0.6593
   },
   {
     "deezer_id": 1489803022,
@@ -813,7 +947,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.212,
+    "y": 0.1563
   },
   {
     "deezer_id": 2145764387,
@@ -825,7 +961,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.0976,
+    "y": 0.0059
   },
   {
     "deezer_id": 4208859852,
@@ -837,7 +975,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.4711,
+    "y": -0.7771
   },
   {
     "deezer_id": 4036825081,
@@ -849,7 +989,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.8017,
+    "y": 0.3966
   },
   {
     "deezer_id": 968474682,
@@ -861,7 +1003,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.9347,
+    "y": -0.3038
   },
   {
     "deezer_id": 2801379532,
@@ -873,7 +1017,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.2779,
+    "y": 0.2625
   },
   {
     "deezer_id": 2801379412,
@@ -885,7 +1031,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.0255,
+    "y": 0.4274
   },
   {
     "deezer_id": 3125161231,
@@ -897,7 +1045,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.1454,
+    "y": 0.9186
   },
   {
     "deezer_id": 3447342231,
@@ -909,7 +1059,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.5106,
+    "y": -0.3581
   },
   {
     "deezer_id": 1448511102,
@@ -921,7 +1073,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.5211,
+    "y": 0.2639
   },
   {
     "deezer_id": 1723665977,
@@ -933,7 +1087,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.245,
+    "y": 0.1682
   },
   {
     "deezer_id": 4195078772,
@@ -945,7 +1101,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.9838,
+    "y": -0.2862
   },
   {
     "deezer_id": 4195078842,
@@ -957,7 +1115,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.6436,
+    "y": -0.146
   },
   {
     "deezer_id": 3214287571,
@@ -969,7 +1129,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.7675,
+    "y": -0.5845
   },
   {
     "deezer_id": 2655160962,
@@ -981,7 +1143,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.5877,
+    "y": 0.8684
   },
   {
     "deezer_id": 2386586045,
@@ -993,7 +1157,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.4502,
+    "y": -0.3548
   },
   {
     "deezer_id": 3003099991,
@@ -1005,7 +1171,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.412,
+    "y": -0.1302
   },
   {
     "deezer_id": 2939590111,
@@ -1017,7 +1185,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.7373,
+    "y": -0.4644
   },
   {
     "deezer_id": 3294950731,
@@ -1029,7 +1199,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.0016,
+    "y": 0.3311
   },
   {
     "deezer_id": 370426001,
@@ -1041,7 +1213,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.775,
+    "y": 0.1369
   },
   {
     "deezer_id": 2810436902,
@@ -1053,7 +1227,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.5341,
+    "y": -0.3986
   },
   {
     "deezer_id": 2486117521,
@@ -1065,7 +1241,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.1729,
+    "y": 0.4226
   },
   {
     "deezer_id": 3171003011,
@@ -1077,7 +1255,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.8646,
+    "y": 0.0949
   },
   {
     "deezer_id": 132201190,
@@ -1089,7 +1269,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.5085,
+    "y": -0.179
   },
   {
     "deezer_id": 736630782,
@@ -1101,7 +1283,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.1632,
+    "y": 0.0673
   },
   {
     "deezer_id": 3345133671,
@@ -1113,7 +1297,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.5716,
+    "y": -0.7485
   },
   {
     "deezer_id": 2473410421,
@@ -1125,7 +1311,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.0542,
+    "y": -0.0023
   },
   {
     "deezer_id": 2883553712,
@@ -1137,7 +1325,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.568,
+    "y": -0.0836
   },
   {
     "deezer_id": 1733245187,
@@ -1149,7 +1339,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.8762,
+    "y": 0.2349
   },
   {
     "deezer_id": 3100867631,
@@ -1161,7 +1353,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.3108,
+    "y": -0.1875
   },
   {
     "deezer_id": 3722333222,
@@ -1173,7 +1367,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.5595,
+    "y": 0.1563
   },
   {
     "deezer_id": 3257124661,
@@ -1185,7 +1381,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.7673,
+    "y": -0.7479
   },
   {
     "deezer_id": 4295078762,
@@ -1197,7 +1395,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.4987,
+    "y": 0.4746
   },
   {
     "deezer_id": 382428921,
@@ -1209,7 +1409,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.5196,
+    "y": 0.4243
   },
   {
     "deezer_id": 2758436071,
@@ -1221,7 +1423,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.2949,
+    "y": -0.6123
   },
   {
     "deezer_id": 3421452581,
@@ -1233,7 +1437,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.8447,
+    "y": -0.6167
   },
   {
     "deezer_id": 2486117711,
@@ -1245,7 +1451,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.4596,
+    "y": 0.6704
   },
   {
     "deezer_id": 3113440011,
@@ -1257,7 +1465,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.7898,
+    "y": -0.3604
   },
   {
     "deezer_id": 3553155311,
@@ -1269,7 +1479,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.0881,
+    "y": 0.7702
   },
   {
     "deezer_id": 2659210642,
@@ -1281,7 +1493,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.3517,
+    "y": -0.2659
   },
   {
     "deezer_id": 1567099012,
@@ -1293,7 +1507,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.8065,
+    "y": -0.3277
   },
   {
     "deezer_id": 1781813547,
@@ -1305,7 +1521,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.0626,
+    "y": -0.5736
   },
   {
     "deezer_id": 1299712202,
@@ -1317,7 +1535,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.4658,
+    "y": 0.9221
   },
   {
     "deezer_id": 3921969781,
@@ -1329,7 +1549,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.0118,
+    "y": 0.3354
   },
   {
     "deezer_id": 2672689962,
@@ -1341,7 +1563,9 @@
     "liked": true,
     "tempo_label": "slow",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.5098,
+    "y": -0.0417
   },
   {
     "deezer_id": 2473525031,
@@ -1353,7 +1577,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.2591,
+    "y": -0.2585
   },
   {
     "deezer_id": 2949625211,
@@ -1365,7 +1591,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.7993,
+    "y": 0.1242
   },
   {
     "deezer_id": 2382317195,
@@ -1377,7 +1605,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.5762,
+    "y": 0.0107
   },
   {
     "deezer_id": 3240044361,
@@ -1389,7 +1619,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.6774,
+    "y": -0.7806
   },
   {
     "deezer_id": 3596368942,
@@ -1401,7 +1633,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.4027,
+    "y": 0.0834
   },
   {
     "deezer_id": 97328588,
@@ -1413,7 +1647,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.9048,
+    "y": -0.0552
   },
   {
     "deezer_id": 12291519,
@@ -1425,7 +1661,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.5885,
+    "y": -0.0235
   },
   {
     "deezer_id": 1056313652,
@@ -1437,7 +1675,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.1695,
+    "y": -0.3307
   },
   {
     "deezer_id": 1500359812,
@@ -1449,7 +1689,9 @@
     "liked": true,
     "tempo_label": "slow",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.5308,
+    "y": 0.6532
   },
   {
     "deezer_id": 1766771587,
@@ -1461,7 +1703,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.6204,
+    "y": 0.314
   },
   {
     "deezer_id": 623422582,
@@ -1473,7 +1717,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.5297,
+    "y": -0.8273
   },
   {
     "deezer_id": 124603262,
@@ -1485,7 +1731,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.3539,
+    "y": -0.0945
   },
   {
     "deezer_id": 2972935471,
@@ -1497,7 +1745,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.1472,
+    "y": 0.284
   },
   {
     "deezer_id": 124603278,
@@ -1509,7 +1759,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.8515,
+    "y": 0.0787
   },
   {
     "deezer_id": 124603274,
@@ -1521,7 +1773,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.3317,
+    "y": 0.7886
   },
   {
     "deezer_id": 356902761,
@@ -1533,7 +1787,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.8616,
+    "y": 0.056
   },
   {
     "deezer_id": 4262973481,
@@ -1545,7 +1801,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.8422,
+    "y": 0.0668
   },
   {
     "deezer_id": 860359162,
@@ -1557,7 +1815,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.8781,
+    "y": -0.6333
   },
   {
     "deezer_id": 1947109267,
@@ -1569,7 +1829,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.8548,
+    "y": -0.5184
   },
   {
     "deezer_id": 1567099022,
@@ -1581,7 +1843,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.8773,
+    "y": 0.0995
   },
   {
     "deezer_id": 1120361182,
@@ -1593,7 +1857,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.0286,
+    "y": 0.6331
   },
   {
     "deezer_id": 1850974647,
@@ -1605,7 +1871,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.2416,
+    "y": 0.7413
   },
   {
     "deezer_id": 1741494477,
@@ -1617,7 +1885,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.6123,
+    "y": -0.0324
   },
   {
     "deezer_id": 1741494447,
@@ -1629,7 +1899,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.9276,
+    "y": -0.3135
   },
   {
     "deezer_id": 1741494417,
@@ -1641,7 +1913,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.8589,
+    "y": -0.2143
   },
   {
     "deezer_id": 1741494407,
@@ -1653,7 +1927,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.0009,
+    "y": 0.4216
   },
   {
     "deezer_id": 1741494387,
@@ -1665,7 +1941,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.6487,
+    "y": -0.1661
   },
   {
     "deezer_id": 1741494377,
@@ -1677,7 +1955,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.3987,
+    "y": 0.2243
   },
   {
     "deezer_id": 1741494367,
@@ -1689,7 +1969,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.5158,
+    "y": 0.9208
   },
   {
     "deezer_id": 1741494357,
@@ -1701,7 +1983,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.6184,
+    "y": 0.0942
   },
   {
     "deezer_id": 1741494347,
@@ -1713,7 +1997,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.6355,
+    "y": -0.3163
   },
   {
     "deezer_id": 1741494317,
@@ -1725,7 +2011,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.4758,
+    "y": 0.1505
   },
   {
     "deezer_id": 1741494307,
@@ -1737,7 +2025,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.4325,
+    "y": 0.2753
   },
   {
     "deezer_id": 1741494287,
@@ -1749,7 +2039,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.4774,
+    "y": 0.4332
   },
   {
     "deezer_id": 1741494337,
@@ -1761,7 +2053,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.2432,
+    "y": 0.1176
   },
   {
     "deezer_id": 1741494327,
@@ -1773,7 +2067,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.5099,
+    "y": 0.0401
   },
   {
     "deezer_id": 1741494397,
@@ -1785,7 +2081,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.8559,
+    "y": -0.064
   },
   {
     "deezer_id": 1741494427,
@@ -1797,7 +2095,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.5312,
+    "y": 0.0599
   },
   {
     "deezer_id": 1741494457,
@@ -1809,7 +2109,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.8355,
+    "y": -0.1606
   },
   {
     "deezer_id": 686020062,
@@ -1821,7 +2123,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.0514,
+    "y": -0.1537
   },
   {
     "deezer_id": 1741494497,
@@ -1833,7 +2137,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.626,
+    "y": -0.4073
   },
   {
     "deezer_id": 1741494467,
@@ -1845,7 +2151,9 @@
     "liked": true,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.95,
+    "y": -0.2172
   },
   {
     "deezer_id": 1756569567,
@@ -1857,7 +2165,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.961,
+    "y": -0.179
   },
   {
     "deezer_id": 1756569577,
@@ -1869,7 +2179,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.3897,
+    "y": -0.4528
   },
   {
     "deezer_id": 1756569587,
@@ -1881,7 +2193,9 @@
     "liked": true,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.1062,
+    "y": -0.6125
   },
   {
     "deezer_id": 1122450992,
@@ -1893,7 +2207,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.2594,
+    "y": 0.1011
   },
   {
     "deezer_id": 1224382782,
@@ -1905,7 +2221,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.941,
+    "y": -0.1686
   },
   {
     "deezer_id": 3046647781,
@@ -1917,7 +2235,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.6054,
+    "y": -0.1241
   },
   {
     "deezer_id": 2223276187,
@@ -1929,7 +2249,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.2819,
+    "y": -0.3952
   },
   {
     "deezer_id": 372299631,
@@ -1941,7 +2263,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.8575,
+    "y": -0.2625
   },
   {
     "deezer_id": 2544359351,
@@ -1953,7 +2277,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.7136,
+    "y": 0.0063
   },
   {
     "deezer_id": 828716362,
@@ -1965,7 +2291,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.7243,
+    "y": -0.1626
   },
   {
     "deezer_id": 68621355,
@@ -1977,7 +2305,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.6238,
+    "y": -0.7752
   },
   {
     "deezer_id": 133297136,
@@ -1989,7 +2319,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.0064,
+    "y": 0.4817
   },
   {
     "deezer_id": 482986842,
@@ -2001,7 +2333,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.8879,
+    "y": -0.521
   },
   {
     "deezer_id": 702421822,
@@ -2013,7 +2347,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.4085,
+    "y": -0.2374
   },
   {
     "deezer_id": 376989861,
@@ -2025,7 +2361,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.6872,
+    "y": -0.2525
   },
   {
     "deezer_id": 3189333101,
@@ -2037,7 +2375,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.2997,
+    "y": -0.4207
   },
   {
     "deezer_id": 903698362,
@@ -2049,7 +2389,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.5217,
+    "y": -0.4897
   },
   {
     "deezer_id": 4081630461,
@@ -2061,7 +2403,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.0448,
+    "y": 0.3333
   },
   {
     "deezer_id": 2047662477,
@@ -2073,7 +2417,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.1279,
+    "y": 0.726
   },
   {
     "deezer_id": 607697962,
@@ -2085,7 +2431,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.8377,
+    "y": 0.1119
   },
   {
     "deezer_id": 2614584352,
@@ -2097,7 +2445,9 @@
     "liked": false,
     "tempo_label": "slow",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.5737,
+    "y": 0.7094
   },
   {
     "deezer_id": 1097090192,
@@ -2109,7 +2459,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.8892,
+    "y": 0.0883
   },
   {
     "deezer_id": 1579438382,
@@ -2121,7 +2473,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.1098,
+    "y": 0.5817
   },
   {
     "deezer_id": 130414940,
@@ -2133,7 +2487,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.2081,
+    "y": 0.7811
   },
   {
     "deezer_id": 921945042,
@@ -2145,7 +2501,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.1069,
+    "y": 0.2194
   },
   {
     "deezer_id": 4138425571,
@@ -2157,7 +2515,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.5931,
+    "y": 0.66
   },
   {
     "deezer_id": 2358473445,
@@ -2169,7 +2529,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.5427,
+    "y": -0.6344
   },
   {
     "deezer_id": 3812245442,
@@ -2181,7 +2543,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.7454,
+    "y": 0.465
   },
   {
     "deezer_id": 2170452207,
@@ -2193,7 +2557,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.1281,
+    "y": 0.3539
   },
   {
     "deezer_id": 3812245452,
@@ -2205,7 +2571,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.1991,
+    "y": 0.3738
   },
   {
     "deezer_id": 4321519892,
@@ -2217,7 +2585,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.5386,
+    "y": 0.4384
   },
   {
     "deezer_id": 3812245472,
@@ -2229,7 +2599,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.4299,
+    "y": 0.6928
   },
   {
     "deezer_id": 2096221247,
@@ -2241,7 +2613,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.7751,
+    "y": 0.4611
   },
   {
     "deezer_id": 4018374441,
@@ -2253,7 +2627,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.3167,
+    "y": 0.6046
   },
   {
     "deezer_id": 3837758361,
@@ -2265,7 +2641,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.3138,
+    "y": 0.4183
   },
   {
     "deezer_id": 3992709601,
@@ -2277,7 +2655,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.59,
+    "y": -0.3236
   },
   {
     "deezer_id": 4170608342,
@@ -2289,7 +2669,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.3105,
+    "y": -0.4329
   },
   {
     "deezer_id": 3815667742,
@@ -2301,7 +2683,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.0207,
+    "y": 0.3327
   },
   {
     "deezer_id": 3580782421,
@@ -2313,7 +2697,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.0614,
+    "y": 0.728
   },
   {
     "deezer_id": 2105651127,
@@ -2325,7 +2711,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.7147,
+    "y": -0.3091
   },
   {
     "deezer_id": 4183820642,
@@ -2337,7 +2725,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.5508,
+    "y": 0.2037
   },
   {
     "deezer_id": 4254400511,
@@ -2349,7 +2739,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.6753,
+    "y": -0.7511
   },
   {
     "deezer_id": 2762597371,
@@ -2361,7 +2753,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.1304,
+    "y": 0.0113
   },
   {
     "deezer_id": 3437842221,
@@ -2373,7 +2767,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.8206,
+    "y": -0.4462
   },
   {
     "deezer_id": 3437842321,
@@ -2385,7 +2781,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.0933,
+    "y": 0.5471
   },
   {
     "deezer_id": 4003859851,
@@ -2397,7 +2795,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.6365,
+    "y": 0.2967
   },
   {
     "deezer_id": 2762597331,
@@ -2409,7 +2809,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.0394,
+    "y": 0.4604
   },
   {
     "deezer_id": 2712744241,
@@ -2421,7 +2823,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.6357,
+    "y": -0.429
   },
   {
     "deezer_id": 3090616041,
@@ -2433,7 +2837,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.8515,
+    "y": -0.6253
   },
   {
     "deezer_id": 2429798055,
@@ -2445,7 +2851,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.2863,
+    "y": 0.2964
   },
   {
     "deezer_id": 2813237712,
@@ -2457,7 +2865,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.8712,
+    "y": -0.261
   },
   {
     "deezer_id": 4125377691,
@@ -2469,7 +2879,9 @@
     "liked": false,
     "tempo_label": "slow",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.5408,
+    "y": -0.0757
   },
   {
     "deezer_id": 3953713231,
@@ -2481,7 +2893,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.8778,
+    "y": -0.5358
   },
   {
     "deezer_id": 4017254841,
@@ -2493,7 +2907,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.3997,
+    "y": -0.7106
   },
   {
     "deezer_id": 2464989585,
@@ -2505,7 +2921,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.7182,
+    "y": -0.3014
   },
   {
     "deezer_id": 2305911755,
@@ -2517,7 +2935,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.2013,
+    "y": 0.7078
   },
   {
     "deezer_id": 4250155941,
@@ -2529,7 +2949,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.8485,
+    "y": -0.5152
   },
   {
     "deezer_id": 75526535,
@@ -2541,7 +2963,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.2513,
+    "y": -0.6598
   },
   {
     "deezer_id": 75526546,
@@ -2553,7 +2977,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.8599,
+    "y": -0.6406
   },
   {
     "deezer_id": 862847042,
@@ -2565,7 +2991,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.3358,
+    "y": -0.323
   },
   {
     "deezer_id": 107351022,
@@ -2577,7 +3005,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.0475,
+    "y": 0.108
   },
   {
     "deezer_id": 2813082002,
@@ -2589,7 +3019,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.6028,
+    "y": -0.4897
   },
   {
     "deezer_id": 2206135697,
@@ -2601,7 +3033,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.583,
+    "y": 0.0827
   },
   {
     "deezer_id": 1821779767,
@@ -2613,7 +3047,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.6228,
+    "y": 0.0504
   },
   {
     "deezer_id": 1269994142,
@@ -2625,7 +3061,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.6144,
+    "y": -0.2807
   },
   {
     "deezer_id": 2680629052,
@@ -2637,7 +3075,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.7246,
+    "y": 0.5789
   },
   {
     "deezer_id": 1821779787,
@@ -2649,7 +3089,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.115,
+    "y": -0.145
   },
   {
     "deezer_id": 1954549937,
@@ -2661,7 +3103,9 @@
     "liked": false,
     "tempo_label": "slow",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.7148,
+    "y": -0.3159
   },
   {
     "deezer_id": 1095017452,
@@ -2673,7 +3117,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.724,
+    "y": -0.1588
   },
   {
     "deezer_id": 1146284192,
@@ -2685,7 +3131,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.1929,
+    "y": 0.769
   },
   {
     "deezer_id": 1217324072,
@@ -2697,7 +3145,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.6207,
+    "y": -0.4061
   },
   {
     "deezer_id": 2021546557,
@@ -2709,7 +3159,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.1078,
+    "y": 0.0878
   },
   {
     "deezer_id": 3298166261,
@@ -2721,7 +3173,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.4324,
+    "y": -0.778
   },
   {
     "deezer_id": 3623680942,
@@ -2733,7 +3187,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.3525,
+    "y": -0.1345
   },
   {
     "deezer_id": 3298163481,
@@ -2745,7 +3201,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.4577,
+    "y": -0.314
   },
   {
     "deezer_id": 3317452841,
@@ -2757,7 +3215,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.4119,
+    "y": -0.2312
   },
   {
     "deezer_id": 3714656922,
@@ -2769,7 +3229,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.0971,
+    "y": -0.0359
   },
   {
     "deezer_id": 714210042,
@@ -2781,7 +3243,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.7552,
+    "y": -0.7495
   },
   {
     "deezer_id": 4116698781,
@@ -2793,7 +3257,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.3682,
+    "y": -0.0925
   },
   {
     "deezer_id": 734393362,
@@ -2805,7 +3271,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.4237,
+    "y": -0.5612
   },
   {
     "deezer_id": 637104912,
@@ -2817,7 +3285,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.6582,
+    "y": 0.7708
   },
   {
     "deezer_id": 4192395472,
@@ -2829,7 +3299,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.2673,
+    "y": 0.4057
   },
   {
     "deezer_id": 2066896257,
@@ -2841,7 +3313,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.6319,
+    "y": 0.8373
   },
   {
     "deezer_id": 1224382812,
@@ -2853,7 +3327,9 @@
     "liked": false,
     "tempo_label": "slow",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.002,
+    "y": 0.1336
   },
   {
     "deezer_id": 3789196282,
@@ -2865,7 +3341,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.3018,
+    "y": -0.0742
   },
   {
     "deezer_id": 468546812,
@@ -2877,7 +3355,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.8412,
+    "y": 0.3709
   },
   {
     "deezer_id": 3279578161,
@@ -2889,7 +3369,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.6006,
+    "y": -0.031
   },
   {
     "deezer_id": 566765932,
@@ -2901,7 +3383,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.1494,
+    "y": 0.5578
   },
   {
     "deezer_id": 2473495071,
@@ -2913,7 +3397,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.3207,
+    "y": -0.4498
   },
   {
     "deezer_id": 3003099941,
@@ -2925,7 +3411,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.7852,
+    "y": -0.1862
   },
   {
     "deezer_id": 703736682,
@@ -2937,7 +3425,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.4482,
+    "y": 0.8284
   },
   {
     "deezer_id": 4337961732,
@@ -2949,7 +3439,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.6774,
+    "y": -0.0722
   },
   {
     "deezer_id": 4337962082,
@@ -2961,7 +3453,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.5741,
+    "y": -0.3651
   },
   {
     "deezer_id": 3564564061,
@@ -2973,7 +3467,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.7122,
+    "y": -0.7209
   },
   {
     "deezer_id": 4337962072,
@@ -2985,7 +3481,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.5381,
+    "y": -0.2068
   },
   {
     "deezer_id": 4337962092,
@@ -2997,7 +3495,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.7027,
+    "y": -0.2391
   },
   {
     "deezer_id": 1643944002,
@@ -3009,7 +3509,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.0682,
+    "y": -0.3345
   },
   {
     "deezer_id": 3275671431,
@@ -3021,7 +3523,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.7638,
+    "y": -0.7097
   },
   {
     "deezer_id": 2874391692,
@@ -3033,7 +3537,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.3194,
+    "y": -0.4629
   },
   {
     "deezer_id": 3529745481,
@@ -3045,7 +3551,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.6032,
+    "y": -0.5901
   },
   {
     "deezer_id": 3411281521,
@@ -3057,7 +3565,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.6491,
+    "y": -0.8156
   },
   {
     "deezer_id": 3773860772,
@@ -3069,7 +3579,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.3246,
+    "y": 0.7118
   },
   {
     "deezer_id": 4090449921,
@@ -3081,7 +3593,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 1.0,
+    "y": -0.0438
   },
   {
     "deezer_id": 872884442,
@@ -3093,7 +3607,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.6762,
+    "y": -0.2286
   },
   {
     "deezer_id": 3107145531,
@@ -3105,7 +3621,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.4109,
+    "y": -0.2619
   },
   {
     "deezer_id": 3773860782,
@@ -3117,7 +3635,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.6308,
+    "y": -0.394
   },
   {
     "deezer_id": 3255009791,
@@ -3129,7 +3649,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.9048,
+    "y": -0.0247
   },
   {
     "deezer_id": 3612800442,
@@ -3141,7 +3663,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.8595,
+    "y": 0.1542
   },
   {
     "deezer_id": 417767192,
@@ -3153,7 +3677,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.7622,
+    "y": 0.2118
   },
   {
     "deezer_id": 3064010291,
@@ -3165,7 +3691,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.6293,
+    "y": -0.3106
   },
   {
     "deezer_id": 2227943687,
@@ -3177,7 +3705,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.1598,
+    "y": 0.8063
   },
   {
     "deezer_id": 3025966451,
@@ -3189,7 +3719,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.5466,
+    "y": 0.069
   },
   {
     "deezer_id": 3025696061,
@@ -3201,7 +3733,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.9734,
+    "y": -0.0088
   },
   {
     "deezer_id": 3025966401,
@@ -3213,7 +3747,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.1953,
+    "y": 0.9067
   },
   {
     "deezer_id": 3025964301,
@@ -3225,7 +3761,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.0597,
+    "y": 0.5759
   },
   {
     "deezer_id": 496157642,
@@ -3237,7 +3775,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.6459,
+    "y": 0.7886
   },
   {
     "deezer_id": 74525041,
@@ -3249,7 +3789,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.1239,
+    "y": 0.6086
   },
   {
     "deezer_id": 127365547,
@@ -3261,7 +3803,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.636,
+    "y": -0.3813
   },
   {
     "deezer_id": 74525015,
@@ -3273,7 +3817,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.7465,
+    "y": 0.1378
   },
   {
     "deezer_id": 3524652351,
@@ -3285,7 +3831,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.5804,
+    "y": 0.5891
   },
   {
     "deezer_id": 3524652331,
@@ -3297,7 +3845,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -1.0,
+    "y": -0.2498
   },
   {
     "deezer_id": 110955782,
@@ -3309,7 +3859,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.2885,
+    "y": -0.3816
   },
   {
     "deezer_id": 4276560062,
@@ -3321,7 +3873,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.6131,
+    "y": -0.2658
   },
   {
     "deezer_id": 110955778,
@@ -3333,7 +3887,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.1769,
+    "y": 0.1157
   },
   {
     "deezer_id": 2402314685,
@@ -3345,7 +3901,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.3956,
+    "y": -0.7181
   },
   {
     "deezer_id": 1032957942,
@@ -3357,7 +3915,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.3696,
+    "y": -0.4643
   },
   {
     "deezer_id": 1753549417,
@@ -3369,7 +3929,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.4409,
+    "y": -0.3961
   },
   {
     "deezer_id": 4336426072,
@@ -3381,7 +3943,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.3458,
+    "y": -0.0083
   },
   {
     "deezer_id": 3216020161,
@@ -3393,7 +3957,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.7621,
+    "y": -0.6494
   },
   {
     "deezer_id": 2169294337,
@@ -3405,7 +3971,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.7896,
+    "y": -0.5399
   },
   {
     "deezer_id": 4336426042,
@@ -3417,7 +3985,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.332,
+    "y": -0.2096
   },
   {
     "deezer_id": 745192672,
@@ -3429,7 +3999,9 @@
     "liked": false,
     "tempo_label": "slow",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.3586,
+    "y": 0.606
   },
   {
     "deezer_id": 603373932,
@@ -3441,7 +4013,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.4025,
+    "y": 0.0786
   },
   {
     "deezer_id": 414263422,
@@ -3453,7 +4027,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.7168,
+    "y": 0.3596
   },
   {
     "deezer_id": 3191643301,
@@ -3465,7 +4041,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.4738,
+    "y": -0.5983
   },
   {
     "deezer_id": 4263028721,
@@ -3477,7 +4055,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.4721,
+    "y": -0.482
   },
   {
     "deezer_id": 3899366101,
@@ -3489,7 +4069,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.6568,
+    "y": -0.0563
   },
   {
     "deezer_id": 3899366241,
@@ -3501,7 +4083,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.8578,
+    "y": -0.1892
   },
   {
     "deezer_id": 3899366131,
@@ -3513,7 +4097,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.6607,
+    "y": -0.1414
   },
   {
     "deezer_id": 3230517051,
@@ -3525,7 +4111,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.8718,
+    "y": -0.3111
   },
   {
     "deezer_id": 4160314992,
@@ -3537,7 +4125,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.6816,
+    "y": -0.0715
   },
   {
     "deezer_id": 1431304382,
@@ -3549,7 +4139,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.4523,
+    "y": -0.8168
   },
   {
     "deezer_id": 4160077042,
@@ -3561,7 +4153,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.6797,
+    "y": -0.3886
   },
   {
     "deezer_id": 2986736501,
@@ -3573,7 +4167,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.4761,
+    "y": -0.3264
   },
   {
     "deezer_id": 4259068031,
@@ -3585,7 +4181,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.6345,
+    "y": 0.3993
   },
   {
     "deezer_id": 3605857532,
@@ -3597,7 +4195,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.6813,
+    "y": -0.2807
   },
   {
     "deezer_id": 2105808597,
@@ -3609,7 +4209,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.2487,
+    "y": 0.3175
   },
   {
     "deezer_id": 3778838102,
@@ -3621,7 +4223,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.6613,
+    "y": -0.3139
   },
   {
     "deezer_id": 3669150802,
@@ -3633,7 +4237,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.5375,
+    "y": -0.6889
   },
   {
     "deezer_id": 4062772581,
@@ -3645,7 +4251,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.6787,
+    "y": -0.6441
   },
   {
     "deezer_id": 4169666052,
@@ -3657,7 +4265,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.4105,
+    "y": -0.0067
   },
   {
     "deezer_id": 3473370681,
@@ -3669,7 +4279,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.0916,
+    "y": 0.6548
   },
   {
     "deezer_id": 107744166,
@@ -3681,7 +4293,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.1916,
+    "y": 0.8042
   },
   {
     "deezer_id": 107744162,
@@ -3693,7 +4307,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.2389,
+    "y": 0.3606
   },
   {
     "deezer_id": 107744184,
@@ -3705,7 +4321,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.2263,
+    "y": 0.3211
   },
   {
     "deezer_id": 2654650822,
@@ -3717,7 +4335,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.6091,
+    "y": -0.2284
   },
   {
     "deezer_id": 4295002292,
@@ -3729,7 +4349,9 @@
     "liked": false,
     "tempo_label": "slow",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.8603,
+    "y": -0.2534
   },
   {
     "deezer_id": 4161448032,
@@ -3741,7 +4363,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.1656,
+    "y": 0.8826
   },
   {
     "deezer_id": 4331441462,
@@ -3753,7 +4377,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.1445,
+    "y": 0.8837
   },
   {
     "deezer_id": 822658282,
@@ -3765,7 +4391,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.1648,
+    "y": 0.094
   },
   {
     "deezer_id": 3111349821,
@@ -3777,7 +4405,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.0845,
+    "y": 0.6322
   },
   {
     "deezer_id": 1123874582,
@@ -3789,7 +4419,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.6511,
+    "y": -0.3585
   },
   {
     "deezer_id": 1827424677,
@@ -3801,7 +4433,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.9833,
+    "y": -0.1466
   },
   {
     "deezer_id": 1358909452,
@@ -3813,7 +4447,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.6637,
+    "y": -0.4084
   },
   {
     "deezer_id": 3979139801,
@@ -3825,7 +4461,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.247,
+    "y": 0.7145
   },
   {
     "deezer_id": 704064912,
@@ -3837,7 +4475,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.0695,
+    "y": 0.2706
   },
   {
     "deezer_id": 4391845831,
@@ -3849,7 +4489,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.7705,
+    "y": -0.1099
   },
   {
     "deezer_id": 2269096367,
@@ -3861,7 +4503,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.6194,
+    "y": -0.8896
   },
   {
     "deezer_id": 3183015691,
@@ -3873,7 +4517,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.8115,
+    "y": 0.051
   },
   {
     "deezer_id": 2269096357,
@@ -3885,7 +4531,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.596,
+    "y": -0.9221
   },
   {
     "deezer_id": 4317624022,
@@ -3897,7 +4545,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.2349,
+    "y": 0.3846
   },
   {
     "deezer_id": 2432816415,
@@ -3909,7 +4559,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.6224,
+    "y": 0.7566
   },
   {
     "deezer_id": 4191980102,
@@ -3921,7 +4573,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.8149,
+    "y": -0.1885
   },
   {
     "deezer_id": 3240412351,
@@ -3933,7 +4587,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.2945,
+    "y": 0.2502
   },
   {
     "deezer_id": 657623672,
@@ -3945,7 +4601,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.3152,
+    "y": 0.1063
   },
   {
     "deezer_id": 3365243151,
@@ -3957,7 +4615,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.2078,
+    "y": -0.6742
   },
   {
     "deezer_id": 3367408371,
@@ -3969,7 +4629,9 @@
     "liked": false,
     "tempo_label": "slow",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.9648,
+    "y": -0.2521
   },
   {
     "deezer_id": 683996472,
@@ -3981,7 +4643,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.7655,
+    "y": 0.2141
   },
   {
     "deezer_id": 3367176521,
@@ -3993,7 +4657,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.1006,
+    "y": -0.3696
   },
   {
     "deezer_id": 3367408391,
@@ -4005,7 +4671,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.5895,
+    "y": 0.2361
   },
   {
     "deezer_id": 3246241631,
@@ -4017,7 +4685,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.9118,
+    "y": -0.1036
   },
   {
     "deezer_id": 1700510077,
@@ -4029,7 +4699,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.3633,
+    "y": 0.2339
   },
   {
     "deezer_id": 3246241721,
@@ -4041,7 +4713,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.784,
+    "y": -0.2699
   },
   {
     "deezer_id": 2649628682,
@@ -4053,7 +4727,9 @@
     "liked": false,
     "tempo_label": "slow",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.2724,
+    "y": 0.6348
   },
   {
     "deezer_id": 2649628582,
@@ -4065,7 +4741,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.1217,
+    "y": 0.622
   },
   {
     "deezer_id": 1697641247,
@@ -4077,7 +4755,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.8395,
+    "y": 0.2891
   },
   {
     "deezer_id": 2107321427,
@@ -4089,7 +4769,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.4964,
+    "y": 0.7189
   },
   {
     "deezer_id": 2107321507,
@@ -4101,7 +4783,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.0431,
+    "y": 0.142
   },
   {
     "deezer_id": 1697641217,
@@ -4113,7 +4797,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.0751,
+    "y": 0.1555
   },
   {
     "deezer_id": 2107321367,
@@ -4125,7 +4811,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.4262,
+    "y": 0.5135
   },
   {
     "deezer_id": 3948632981,
@@ -4137,7 +4825,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.2918,
+    "y": -0.3832
   },
   {
     "deezer_id": 4192895312,
@@ -4149,7 +4839,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.5382,
+    "y": -0.3284
   },
   {
     "deezer_id": 4192895272,
@@ -4161,7 +4853,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.6597,
+    "y": -0.6706
   },
   {
     "deezer_id": 1586168512,
@@ -4173,7 +4867,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.3268,
+    "y": 0.1805
   },
   {
     "deezer_id": 4031852201,
@@ -4185,7 +4881,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.495,
+    "y": -0.7735
   },
   {
     "deezer_id": 77913401,
@@ -4197,7 +4895,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.1013,
+    "y": 0.8116
   },
   {
     "deezer_id": 114395812,
@@ -4209,7 +4909,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.0233,
+    "y": 0.5724
   },
   {
     "deezer_id": 439864512,
@@ -4221,7 +4923,9 @@
     "liked": false,
     "tempo_label": "slow",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.538,
+    "y": 0.6802
   },
   {
     "deezer_id": 439864552,
@@ -4233,7 +4937,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.7481,
+    "y": 0.0223
   },
   {
     "deezer_id": 77913387,
@@ -4245,7 +4951,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.647,
+    "y": 0.6618
   },
   {
     "deezer_id": 1346126462,
@@ -4257,7 +4965,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.0694,
+    "y": 0.6152
   },
   {
     "deezer_id": 684000632,
@@ -4269,7 +4979,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.0651,
+    "y": -0.1602
   },
   {
     "deezer_id": 3893155001,
@@ -4281,7 +4993,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": -0.5471,
+    "y": -0.2105
   },
   {
     "deezer_id": 1459438662,
@@ -4293,7 +5007,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.6377,
+    "y": -0.0884
   },
   {
     "deezer_id": 371593121,
@@ -4305,7 +5021,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.5233,
+    "y": -0.2404
   },
   {
     "deezer_id": 357859971,
@@ -4317,7 +5035,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.2374,
+    "y": -0.6739
   },
   {
     "deezer_id": 706187912,
@@ -4329,7 +5049,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.014,
+    "y": 0.036
   },
   {
     "deezer_id": 88476289,
@@ -4341,7 +5063,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.341,
+    "y": -0.6971
   },
   {
     "deezer_id": 87622993,
@@ -4353,7 +5077,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.379,
+    "y": 0.1302
   },
   {
     "deezer_id": 469011782,
@@ -4365,7 +5091,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.0702,
+    "y": -0.3787
   },
   {
     "deezer_id": 4389891511,
@@ -4377,7 +5105,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.7011,
+    "y": -0.4271
   },
   {
     "deezer_id": 4078104881,
@@ -4389,7 +5119,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": -0.7787,
+    "y": -0.0998
   },
   {
     "deezer_id": 4348981142,
@@ -4401,7 +5133,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.7844,
+    "y": -0.6468
   },
   {
     "deezer_id": 4078104981,
@@ -4413,7 +5147,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "low",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": -0.8933,
+    "y": 0.1392
   },
   {
     "deezer_id": 4078104921,
@@ -4425,7 +5161,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.6113,
+    "y": -0.5295
   },
   {
     "deezer_id": 379609971,
@@ -4437,7 +5175,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.572,
+    "y": -0.1909
   },
   {
     "deezer_id": 3806724682,
@@ -4449,7 +5189,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.3669,
+    "y": -0.278
   },
   {
     "deezer_id": 137911999,
@@ -4461,7 +5203,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.9037,
+    "y": -0.3768
   },
   {
     "deezer_id": 3806724702,
@@ -4473,7 +5217,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.928,
+    "y": -0.2393
   },
   {
     "deezer_id": 3805913022,
@@ -4485,7 +5231,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.4742,
+    "y": -0.2589
   },
   {
     "deezer_id": 3579685431,
@@ -4497,7 +5245,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.3282,
+    "y": 0.6683
   },
   {
     "deezer_id": 4304169612,
@@ -4509,7 +5259,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "high",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.3098,
+    "y": 0.6748
   },
   {
     "deezer_id": 737967292,
@@ -4521,7 +5273,9 @@
     "liked": false,
     "tempo_label": "medium",
     "energy_label": "medium",
-    "brightness_label": "dark"
+    "brightness_label": "dark",
+    "x": 0.4903,
+    "y": -0.651
   },
   {
     "deezer_id": 3579685451,
@@ -4533,7 +5287,9 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "bright"
+    "brightness_label": "bright",
+    "x": 0.9237,
+    "y": -0.4219
   },
   {
     "deezer_id": 4304169642,
@@ -4545,6 +5301,8 @@
     "liked": false,
     "tempo_label": "fast",
     "energy_label": "medium",
-    "brightness_label": "warm"
+    "brightness_label": "warm",
+    "x": 0.0307,
+    "y": -0.3277
   }
 ]
