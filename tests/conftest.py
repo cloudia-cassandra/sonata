@@ -1,5 +1,6 @@
 import pytest
 
+import sonata.label as label
 import sonata.rag as rag
 
 REAL_GEMINI_RESPONSE = rag.gemini_response
@@ -19,6 +20,10 @@ def offline_llm(tmp_path, monkeypatch):
     monkeypatch.setattr(rag, "USAGE_PATH", tmp_path / "logs" / "api_usage.json")
     monkeypatch.setattr(rag, "REQUEST_LOG_PATH", tmp_path / "logs" / "sonata.log")
     monkeypatch.setattr(rag, "EMBEDDING_CACHE_PATH", tmp_path / "cache" / "text_embeddings.npz")
+    # No hand mood labels unless a test passes them, so results don't depend on data/mood_labels.csv
+    monkeypatch.setattr(label, "LABELS_PATH", tmp_path / "no_mood_labels.csv")
+    monkeypatch.setattr(label, "SKIPS_PATH", tmp_path / "cache" / "mood_label_skips.json")
+    monkeypatch.setattr(label, "AUTO_LABELS_PATH", tmp_path / "no_auto_labels.json")
     monkeypatch.setenv("LLM_PROVIDER", "mock")
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
     monkeypatch.delenv("LLM_MODEL", raising=False)
@@ -27,3 +32,4 @@ def offline_llm(tmp_path, monkeypatch):
         raise AssertionError("a test tried to make a real Gemini call")
 
     monkeypatch.setattr(rag, "gemini_response", no_real_calls)
+    monkeypatch.setattr(rag, "gemini_generate", no_real_calls)

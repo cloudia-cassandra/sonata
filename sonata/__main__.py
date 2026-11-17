@@ -1,7 +1,7 @@
 """
 Sonata's command line.
 
-  python -m sonata ask "<request>" [--no-audio]   RAG recommendations with reasons and confidence
+  python -m sonata ask "<request>" [--no-audio]   RAG recommendations with reasons and retrieval similarity
   python -m sonata recommend [-k 5]               content-based recommendations from audio features
   python -m sonata evaluate [--fresh]             run the evaluation and print the summary table
 

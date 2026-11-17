@@ -21,14 +21,14 @@ flowchart TD
     subgraph RAG["ask(query): runs from the committed data only"]
         QUERY[/"User request<br/>python -m sonata ask"/]
         INPUT{"Input guardrail<br/>empty or over 500 chars?"}
-        RETRIEVER["Retriever<br/>MiniLM text similarity, top 24<br/>re-ranked 70% text + 30% audio, keep 8"]
+        RETRIEVER["Retriever<br/>MiniLM text similarity, top 24<br/>strong matches first, 85% text + 15% taste, keep 8"]
         GATE{"Best match above<br/>MIN_RELEVANCE 0.40?"}
         CACHE[("data/llm_cache/<br/>query + retrieved ids")]
         QUOTA{"Real calls today<br/>under 18?"}
         LLM["LLM<br/>Gemini via google-genai, or mock<br/>picks 3-5 songs from the list as JSON"]
         VALIDATOR["Guardrail validator<br/>parse JSON, drop ids not retrieved<br/>(hallucinations), duplicates, empty reasons"]
         FALLBACK["Retrieval-only fallback<br/>top retrieved songs + notice"]
-        OUTPUT[/"Output<br/>songs, reasons, confidence 0-1"/]
+        OUTPUT[/"Output<br/>songs, reasons, retrieval similarity 0-1"/]
         REJECT[/"Clear rejection message"/]
         LOG[("logs/sonata.log<br/>logs/api_usage.json")]
 

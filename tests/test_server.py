@@ -96,6 +96,7 @@ def real_client(monkeypatch):
 
     monkeypatch.setattr(rag.ask, "__kwdefaults__", {**rag.ask.__kwdefaults__, "embedder": FakeEmbedder()})
     monkeypatch.setattr(rag, "MIN_RELEVANCE", 0.0)
+    monkeypatch.setattr(rag, "STRONG_MATCH", 0.0)
     return TestClient(server.app)
 
 
@@ -114,12 +115,13 @@ def test_recommendations_k_is_bounded(real_client):
     assert real_client.get("/api/recommendations?k=0").status_code == 422
 
 
-def test_ask_returns_grounded_picks_with_reasons_and_confidence(real_client):
+def test_ask_returns_grounded_picks_with_reasons_and_retrieval_similarity(real_client):
     body = real_client.post("/api/ask", json={"query": "reggaeton for a party"}).json()
     assert body["source"] == "mock"
     assert 3 <= len(body["recommendations"]) <= 5
     assert all(r["deezer_id"] in body["retrieved_ids"] for r in body["recommendations"])
-    assert all(r["reason"] and 0 <= r["confidence"] <= 1 for r in body["recommendations"])
+    assert all(r["reason"] and 0 <= r["retrieval_similarity"] <= 1 for r in body["recommendations"])
+    assert body["strong_matches"] == len(body["retrieved_ids"])     # STRONG_MATCH is 0 here
 
 
 @pytest.mark.parametrize("query", ["   ", "x" * 501])

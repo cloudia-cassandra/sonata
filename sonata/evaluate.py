@@ -7,7 +7,7 @@ Per query it checks:
   (c) graceful     the query was handled as expected without an exception:
                    normal requests get 3-5 songs (a fallback must explain itself),
                    bad input (empty / too long) is rejected with a message and no songs,
-                   nonsense gets a low-confidence notice instead of a model answer
+                   nonsense gets a weak-match notice instead of a model answer
 It writes reports/eval_results.md, then runs every query with use_audio=False and
 True and writes the before/after comparison to reports/rag_comparison.md.
 
@@ -92,13 +92,17 @@ def handled_gracefully(result: Optional[Dict], kind: str) -> bool:
         return source == "rejected" and bool(message) and not picks
     if kind == "nonsense":
         return source in {"fallback", "rejected"} and bool(message)
-    # normal: a usable answer; a fallback is fine as long as it says why
-    return (rag.MIN_PICKS <= len(picks) <= rag.MAX_PICKS
+    # normal: a usable answer; a fallback is fine as long as it says why. With fewer than 3
+    # strong matches, a shorter answer is right as long as it says there's no strong match.
+    few_strong = result.get("strong_matches", rag.MIN_PICKS) < rag.MIN_PICKS
+    fewest = rag.MIN_PICKS_FEW_STRONG if few_strong else rag.MIN_PICKS
+    return (fewest <= len(picks) <= rag.MAX_PICKS
+            and (not few_strong or bool(message))
             and (source in MODEL_SOURCES or (source == "fallback" and bool(message))))
 
 
-def average_confidence(results: List[Dict]) -> Optional[float]:
-    values = [pick["confidence"] for result in results for pick in result.get("recommendations", [])]
+def average_similarity(results: List[Dict]) -> Optional[float]:
+    values = [pick["retrieval_similarity"] for result in results for pick in result.get("recommendations", [])]
     return sum(values) / len(values) if values else None
 
 
@@ -126,7 +130,7 @@ def evaluate(ask: AskFn, queries=TEST_QUERIES, runs: int = RUNS, fresh: bool = F
             "consistency": consistency(results),
             "consistent": consistency(results) >= CONSISTENCY_THRESHOLD,
             "graceful": all(handled_gracefully(None if r in crashed else r, kind) for r in results),
-            "avg_confidence": average_confidence(results),
+            "avg_similarity": average_similarity(results),
             "sources": sorted({r.get("source") for r in results}),
             "hallucinations": sum(1 for r in results for d in r.get("dropped", []) if d["why"] == "hallucination"),
             "messages": sorted({r["message"] for r in results if r.get("message")}),
@@ -146,7 +150,7 @@ def compare_audio(ask: AskFn, audio_map: Dict[int, float], queries=TEST_QUERIES,
             picks = result.get("recommendations", [])
             audio = [audio_map.get(p["song"]["deezer_id"]) for p in picks]
             audio = [a for a in audio if a is not None]
-            return {"result": result, "picks": picks, "avg_confidence": average_confidence([result]),
+            return {"result": result, "picks": picks, "avg_similarity": average_similarity([result]),
                     "avg_audio_match": sum(audio) / len(audio) if audio else None,
                     "liked": sum(p["song"]["liked"] for p in picks)}
 
@@ -186,31 +190,33 @@ def eval_markdown(rows: List[Dict], fresh: bool, runs: int = RUNS) -> str:
         f"Generated {dt.datetime.now():%Y-%m-%d %H:%M} with {settings_line()}; "
         f"{len(rows)} queries × {runs} runs{' (fresh model call per run)' if fresh else ''}.",
         "",
-        "| # | Query | Kind | Grounding | Consistency | Graceful | Avg confidence | Sources |",
+        "| # | Query | Kind | Grounding | Consistency | Graceful | Avg retrieval similarity | Sources |",
         "|---|---|---|---|---|---|---|---|",
     ]
     for number, row in enumerate(rows, start=1):
         lines.append(
             f"| {number} | {short(row['query'])} | {row['kind']} | {mark(row['grounded'])} | "
             f"{mark(row['consistent'])} ({row['consistency']:.0%}) | {mark(row['graceful'])} | "
-            f"{fmt(row['avg_confidence'])} | {', '.join(row['sources'])} |")
+            f"{fmt(row['avg_similarity'])} | {', '.join(row['sources'])} |")
 
-    confidences = [row["avg_confidence"] for row in rows if row["avg_confidence"] is not None]
+    similarities = [row["avg_similarity"] for row in rows if row["avg_similarity"] is not None]
     total = len(rows)
     lines += [
         f"| | **Total** | | **{sum(r['grounded'] for r in rows)}/{total}** | "
         f"**{sum(r['consistent'] for r in rows)}/{total}** | **{sum(r['graceful'] for r in rows)}/{total}** | "
-        f"**{fmt(sum(confidences) / len(confidences) if confidences else None)}** | |",
+        f"**{fmt(sum(similarities) / len(similarities) if similarities else None)}** | |",
         "",
         f"Hallucinated songs dropped by the validator: {sum(r['hallucinations'] for r in rows)}. "
         f"Exceptions: {sum(len(r['errors']) for r in rows)}.",
         "",
         "**Checks.** Grounding: every recommended song was in that run's retrieved set. "
         f"Consistency: mean pairwise overlap of the recommended songs across the {runs} runs is at least "
-        f"{CONSISTENCY_THRESHOLD:.0%}. Graceful: normal requests get {rag.MIN_PICKS}-{rag.MAX_PICKS} songs "
-        "(a fallback must say why), empty or over-500-character input is rejected with a message, and "
-        "nonsense gets a low-confidence notice instead of a model answer. Confidence is the retrieval "
-        "score (0-1) of each recommended song.",
+        f"{CONSISTENCY_THRESHOLD:.0%}. Graceful: normal requests get {rag.MIN_PICKS}-{rag.MAX_PICKS} songs, "
+        f"or {rag.MIN_PICKS_FEW_STRONG}-{rag.MAX_PICKS} with a no-strong-match note when fewer than "
+        f"{rag.MIN_PICKS} songs match strongly (a fallback must say why), empty or over-500-character "
+        "input is rejected with a message, and nonsense gets a weak-match notice instead of a model answer. "
+        "Retrieval similarity is each recommended song's retrieval score (0-1): how closely it matched "
+        "the request, not whether the pick is right.",
     ]
     if deterministic:
         lines += ["", "> **Note:** every run came from the mock provider, the response cache, a fallback or a "
@@ -242,7 +248,7 @@ def comparison_markdown(rows: List[Dict]) -> str:
         "*Audio match* is the recommended songs' average audio similarity (cosine on standardized features) "
         "to their closest liked song, computed the same way for both columns; ♥ marks songs you already like.",
         "",
-        "| # | Query | Before: picks | After: picks | Overlap | Confidence before → after | "
+        "| # | Query | Before: picks | After: picks | Overlap | Retrieval similarity before → after | "
         "Audio match before → after | ♥ before → after |",
         "|---|---|---|---|---|---|---|---|",
     ]
@@ -250,7 +256,7 @@ def comparison_markdown(rows: List[Dict]) -> str:
         b, a = row["before"], row["after"]
         lines.append(
             f"| {number} | {short(row['query'], 30)} | {picks_cell(b)} | {picks_cell(a)} | {row['overlap']:.0%} | "
-            f"{fmt(b['avg_confidence'])} → {fmt(a['avg_confidence'])} | "
+            f"{fmt(b['avg_similarity'])} → {fmt(a['avg_similarity'])} | "
             f"{fmt(b['avg_audio_match'])} → {fmt(a['avg_audio_match'])} | {b['liked']} → {a['liked']} |")
 
     scored = [row for row in rows if row["before"]["picks"] and row["after"]["picks"]]
@@ -263,16 +269,17 @@ def comparison_markdown(rows: List[Dict]) -> str:
         lines += [
             "",
             f"**Averages over the {len(scored)} queries that returned songs:** overlap "
-            f"{fmt(mean([r['overlap'] for r in scored]), '{:.0%}')}, confidence "
-            f"{fmt(mean([r['before']['avg_confidence'] for r in scored]))} → "
-            f"{fmt(mean([r['after']['avg_confidence'] for r in scored]))}, audio match "
+            f"{fmt(mean([r['overlap'] for r in scored]), '{:.0%}')}, retrieval similarity "
+            f"{fmt(mean([r['before']['avg_similarity'] for r in scored]))} → "
+            f"{fmt(mean([r['after']['avg_similarity'] for r in scored]))}, audio match "
             f"{fmt(mean([r['before']['avg_audio_match'] for r in scored]))} → "
             f"{fmt(mean([r['after']['avg_audio_match'] for r in scored]))}, liked songs per answer "
             f"{fmt(mean([r['before']['liked'] for r in scored]), '{:.1f}')} → "
             f"{fmt(mean([r['after']['liked'] for r in scored]), '{:.1f}')}.",
             "",
-            "Confidence is each column's own ranking score (text similarity before, the 70/30 blend after), "
-            "so the two confidence numbers are not on exactly the same scale.",
+            "Retrieval similarity is each column's own ranking score (text similarity before, the "
+            f"{rag.TEXT_WEIGHT:.0%}/{rag.AUDIO_WEIGHT:.0%} blend after), so the two numbers are not on "
+            "exactly the same scale.",
         ]
     return "\n".join(lines) + "\n"
 

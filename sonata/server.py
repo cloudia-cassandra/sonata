@@ -7,7 +7,7 @@ Endpoints
   GET /api/library            every song with its labels, tempo, galaxy position and preview URL
   GET /api/stars/{deezer_id}  the song's star map: [{t, pitch, size}, ...]
   GET /api/recommendations    content-based picks (sonata.recommender), ?k=5
-  POST /api/ask {"query"}     RAG answer (sonata.rag.ask): songs, reasons, confidence
+  POST /api/ask {"query"}     RAG answer (sonata.rag.ask): songs, reasons, retrieval similarity
   GET /previews/{file}        a 30-second MP3 preview, e.g. /previews/3135556.mp3
   GET /                       the web UI in web/ (plain HTML, CSS and JS, no build step)
 
@@ -117,10 +117,13 @@ def ask(request: AskRequest) -> Dict:
         "source": result["source"],
         "message": result["message"],
         "recommendations": [
-            {**_song_ref(pick["song"]), "reason": pick["reason"], "confidence": pick["confidence"]}
+            {**_song_ref(pick["song"]), "reason": pick["reason"],
+             # how closely the song matched the request in retrieval, not a measure of correctness
+             "retrieval_similarity": pick["retrieval_similarity"]}
             for pick in result["recommendations"]
         ],
         "retrieved_ids": result["retrieved_ids"],
+        "strong_matches": result["strong_matches"],
         "latency_ms": result["latency_ms"],
     }
 

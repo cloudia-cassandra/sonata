@@ -43,14 +43,14 @@ flowchart TD
     subgraph RAG["ask(query): runs from the committed data only"]
         QUERY[/"User request<br/>python -m sonata ask"/]
         INPUT{"Input guardrail<br/>empty or over 500 chars?"}
-        RETRIEVER["Retriever<br/>MiniLM text similarity, top 24<br/>re-ranked 70% text + 30% audio, keep 8"]
+        RETRIEVER["Retriever<br/>MiniLM text similarity, top 24<br/>strong matches first, 85% text + 15% taste, keep 8"]
         GATE{"Best match above<br/>MIN_RELEVANCE 0.40?"}
         CACHE[("data/llm_cache/<br/>query + retrieved ids")]
         QUOTA{"Real calls today<br/>under 18?"}
         LLM["LLM<br/>Gemini via google-genai, or mock<br/>picks 3-5 songs from the list as JSON"]
         VALIDATOR["Guardrail validator<br/>parse JSON, drop ids not retrieved<br/>(hallucinations), duplicates, empty reasons"]
         FALLBACK["Retrieval-only fallback<br/>top retrieved songs + notice"]
-        OUTPUT[/"Output<br/>songs, reasons, confidence 0-1"/]
+        OUTPUT[/"Output<br/>songs, reasons, retrieval similarity 0-1"/]
         REJECT[/"Clear rejection message"/]
         LOG[("logs/sonata.log<br/>logs/api_usage.json")]
 
@@ -100,8 +100,9 @@ flowchart TD
    - `sonata.analyze` turns every preview into a 28-number feature vector, a star map (one star per note onset) for the planned web UI, and readable tempo, energy and brightness labels.
    - Everything except the MP3s is committed.
 2. **Retriever:**
-   - Each song gets a text description (title, artist, genre and labels), embedded with `all-MiniLM-L6-v2`.
-   - A request retrieves the 24 closest descriptions, which are re-ranked by 70% text similarity and 30% audio similarity to my liked songs. The best 8 go on.
+   - Each song gets a text description (title, artist, genre, labels and moods, hand-labeled or estimated), embedded with `all-MiniLM-L6-v2`.
+   - A request retrieves the 24 closest descriptions. Songs with text similarity of 0.45 or more are strong matches and always rank first, scored 85% text similarity and 15% taste (audio similarity to my liked songs). Taste only reorders strong matches; weaker songs follow in text order. The best 8 go on.
+   - With fewer than 3 strong matches, the model is told so and may return fewer songs, with a one-line note that the library has no strong match, instead of padding the list.
 3. **LLM:** Gemini receives the request and only those 8 songs, and returns JSON picks with reasons. Responses are cached on disk, and real calls are capped at 18 a day.
 4. **Guardrail validator:**
    - Checks the JSON and drops any song that wasn't retrieved, logging it as a hallucination.
@@ -139,7 +140,7 @@ flowchart TD
 
    The home page is your **galaxy**: one star per song, laid out by UMAP so songs that sound alike sit close together. Liked songs are bright, the rest dim. Drag to pan, scroll or pinch to zoom, and hover for the title and artist.
 
-   Orange stars are the five content-based recommendations, each joined by a thin line to the liked song it sounds closest to and listed in the **For you** panel. The **Ask Sonata** box runs the RAG pipeline: answers appear as cards with their reason and confidence, and their stars light up. The page uses the same functions as the CLI through `GET /api/recommendations` and `POST /api/ask`, so the same mock mode, cache and daily limit apply.
+   Orange stars are the five content-based recommendations, each joined by a thin line to the liked song it sounds closest to and listed in the **For you** panel. The **Ask Sonata** box runs the RAG pipeline: answers appear as cards with their reason and retrieval similarity, and their stars light up. The page uses the same functions as the CLI through `GET /api/recommendations` and `POST /api/ask`, so the same mock mode, cache and daily limit apply.
 
    Clicking a star dives into that song's **sky**: one star per note onset, placed by time and pitch and sized by loudness. Stars light up as the preview plays; without the MP3 previews, a scrub bar replaces playback. The ← Galaxy button, Escape or the browser's back button returns to the galaxy.
 
@@ -157,6 +158,25 @@ flowchart TD
    python -m sonata.analyze               # writes data/features.parquet, data/stars/, labels
    python -m sonata.compute_galaxy        # UMAP layout: writes x, y per song into data/library.json
    ```
+
+6. **Label moods (optional, no credentials needed).** Tag songs one at a time with moods from a fixed list (chill, focus, hype, party, sad, romantic, dark, uplifting, workout, late-night). Liked songs come first, Enter skips, `q` saves and quits, and the next run resumes where you stopped.
+
+   ```bash
+   python -m sonata.label                   # writes data/mood_labels.csv, then refreshes the embeddings
+   python -m sonata.label --revisit-skipped # go back through skipped songs
+   ```
+
+   Labeled songs get "Moods: …" in their description. Unlabeled songs get "Moods (estimated): …", keeping each mood that at least 3 of their 5 most similar-sounding labeled songs share.
+
+7. **Label the rest with the agent (optional, uses Gemini).** `sonata.label_agent` labels every song without a hand label: Gemini labels batches of 25 using 15 of my hand labels as examples, rule-based checks flag doubtful labels (contradictory moods, low confidence, numbers far outside my own labels' range for that mood, moods that the nearest labeled songs don't share), and flagged songs go back to the model with the evidence. What's still flagged waits for me in `sonata.review`.
+
+   ```bash
+   python -m sonata.label_agent --plan   # calls needed and already cached; makes no calls
+   python -m sonata.label_agent          # writes data/auto_labels.json and reports/label_eval.md
+   python -m sonata.review               # accept or replace the flagged labels (saved as hand labels)
+   ```
+
+   A full run needs more than one day's 18 calls. When the budget runs out it stops and writes nothing; running it again the next day replays the finished batches from the cache for free. In mock mode its outputs go to `logs/mock_label_agent/` instead. Hand labels always win over agent labels.
 
 The original VibeCheck recommender still runs with `python -m src.main`.
 
@@ -219,14 +239,15 @@ Source: mock
   - Energy and brightness labels are thirds of my library, because loudness depends on mastering. "High energy" therefore means loud *for my songs*.
 - **Cosine similarity on standardized features** for `recommend`. Z-scoring puts BPM and 0-1 chroma values on the same scale. Each candidate is scored against its *closest* liked song, not my average taste, so a mixed taste (reggaeton plus indie) isn't blurred into a middle that matches nothing. The per-feature terms of the cosine explain each match.
 - **The LLM never chooses from the whole catalog.** Retrieval narrows the library to 8 songs first, and the model may only pick from those. This keeps prompts small, makes every pick checkable, and makes a hallucinated song easy to detect and drop.
-- **A relevance gate before the model.** If the best text match is below 0.40, Sonata skips the model and returns low-confidence retrieval results with a notice. I set the threshold from real data: real requests scored 0.47-0.76, nonsense 0.12-0.34.
+- **A relevance gate before the model.** If the best text match is below 0.40, Sonata skips the model and returns the closest songs with a notice that they're weak matches. I set the threshold from real data: real requests scored 0.47-0.76, nonsense 0.12-0.34.
 - **Built around a free tier of about 20 requests a day:**
   - A disk cache keyed by the query, the retrieved IDs, the model and the prompt version, so repeating a request costs nothing.
   - A daily cap of 18 calls, counted *before* each call.
   - Mock mode by default for development and every test.
   - SDK retries and automatic function calling turned off, so one `ask` is at most one request.
   - Any quota, rate-limit or network error becomes the retrieval-only fallback, never a crash.
-- **Confidence is the retrieval score, not the model's opinion.** LLMs are poorly calibrated about their own certainty. The similarity score is reproducible and means the same thing whether the answer came from Gemini, the cache or the fallback.
+- **Retrieval similarity, not "confidence".** Each pick carries `retrieval_similarity`: how closely it matched the request in retrieval. It was called "confidence", which suggested a chance of being right; it isn't one. LLMs are poorly calibrated about their own certainty, so the score comes from retrieval instead: it's reproducible and means the same thing whether the answer came from Gemini, the cache or the fallback.
+- **Relevance first, taste second.** The request decides which songs are candidates. Taste (15%) only breaks ties among strong matches, so a song that sounds like my favorites can't outrank one that actually fits the request.
 - **The commands work from committed data.** Shared constants live in the lightweight `sonata/features.py`, so `ask`, `recommend` and `evaluate` never import librosa or spotipy.
 
 ## Testing Summary
@@ -263,7 +284,7 @@ What the checks mean:
 
 - **Grounding:** every recommended song was in that run's retrieved set.
 - **Consistency:** the recommended songs overlap by at least 60% across the 3 runs.
-- **Graceful:** bad input is rejected with a message, and nonsense gets a low-confidence notice instead of a model answer.
+- **Graceful:** bad input is rejected with a message, and nonsense gets a weak-match notice instead of a model answer.
 
 The validator dropped 0 hallucinated songs.
 
@@ -271,7 +292,7 @@ These results come from the mock provider, so consistency is 100% by constructio
 
 ## RAG Enhancement
 
-**Audio re-ranking.** Retrieval originally ranked songs by text similarity alone. The enhancement re-ranks the top 24 text matches by blending 70% text similarity with 30% audio similarity to my closest liked song. This favors songs that both fit the words and *sound* like what I already listen to. The before/after below is from [reports/rag_comparison.md](reports/rag_comparison.md): `use_audio=False` before, `use_audio=True` after.
+**Audio re-ranking.** Retrieval originally ranked songs by text similarity alone. The enhancement re-ranks the top 24 text matches with audio similarity to my closest liked song, favoring songs that both fit the words and *sound* like what I already listen to. It started as a 70% text / 30% audio blend; it's now 85% / 15%, applied only among strong matches, after the 30% let taste push songs that didn't fit the request (like loud rap for "chill songs to study to") to the top. The tables and sample runs in this README were measured with the earlier 70/30 version and its "confidence" naming; rerun `python -m sonata evaluate` to refresh them. The before/after below is from [reports/rag_comparison.md](reports/rag_comparison.md): `use_audio=False` before, `use_audio=True` after.
 
 | # | Query | Before: picks | After: picks | Overlap | Confidence before → after | Audio match before → after | ♥ before → after |
 |---|---|---|---|---|---|---|---|

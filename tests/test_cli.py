@@ -27,10 +27,10 @@ def test_recommend_prints_top_5(capsys):
     assert "5. " in out and "6. " not in out and "Similarity" in out
 
 
-def test_ask_prints_songs_reasons_and_confidence(capsys):
+def test_ask_prints_songs_reasons_and_retrieval_similarity(capsys):
     assert main(["ask", "reggaeton for a party"]) == 0
     out = capsys.readouterr().out
-    assert out.startswith("Source: mock") and "(confidence " in out and "1. " in out
+    assert out.startswith("Source: mock") and "(retrieval similarity " in out and "1. " in out
 
 
 def test_ask_rejects_an_empty_request(capsys):

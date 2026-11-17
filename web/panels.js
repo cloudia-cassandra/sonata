@@ -208,15 +208,15 @@ export function initAsk({ form, input, button, answers, status, cards, clear, fi
       const card = el("button", "card");
       card.type = "button";
       card.style.setProperty("--i", i);
-      const confidence = Math.max(0, Math.min(1, pick.confidence));
+      const similarity = Math.max(0, Math.min(1, pick.retrieval_similarity));
       const top = el("span", "card-top");
       const conf = el("span", "conf");
       const bar = el("span", "conf-bar");
       const fill = el("span");
-      fill.style.width = `${Math.round(confidence * 100)}%`;
+      fill.style.width = `${Math.round(similarity * 100)}%`;
       bar.append(fill);
-      conf.append(bar, el("span", null, confidence.toFixed(2)));
-      conf.title = "Confidence: how closely this song matched your request in retrieval (0-1)";
+      conf.append(bar, el("span", null, similarity.toFixed(2)));
+      conf.title = "Retrieval similarity (0-1): how closely this song matched your request in search. It is not a measure of how right the pick is.";
       top.append(el("span", "card-rank", String(i + 1)), conf);
       card.append(
         top,
@@ -224,7 +224,7 @@ export function initAsk({ form, input, button, answers, status, cards, clear, fi
         el("span", "card-artist", `${track?.liked ? "♥ " : ""}${pick.artist}`),
         el("span", "card-reason", pick.reason),
       );
-      card.setAttribute("aria-label", `${i + 1}. ${pick.title} by ${pick.artist}, confidence ${confidence.toFixed(2)}. ${pick.reason}`);
+      card.setAttribute("aria-label", `${i + 1}. ${pick.title} by ${pick.artist}, retrieval similarity ${similarity.toFixed(2)}. ${pick.reason}`);
       linkToStar(card, pick.deezer_id, onHighlight);
       card.addEventListener("click", () => track && onOpen(track));
       const item = el("li");

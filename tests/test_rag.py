@@ -52,8 +52,9 @@ def features(library):
 
 @pytest.fixture(autouse=True)
 def no_relevance_gate(monkeypatch):
-    """The fake embedder scores lower than MiniLM; the relevance gate has its own test."""
+    """The fake embedder scores lower than MiniLM; the relevance gate and strong matches have their own tests."""
     monkeypatch.setattr(rag, "MIN_RELEVANCE", 0.0)
+    monkeypatch.setattr(rag, "STRONG_MATCH", 0.0)
 
 
 def ask(query, library, features, embedder=None, **kwargs):
@@ -108,12 +109,12 @@ def test_text_retrieval_returns_8_songs_matching_the_query(library, features):
     assert scores == sorted(scores, reverse=True) and all(0 <= s <= 1 for s in scores)
 
 
-def test_audio_blend_is_70_30_and_can_reorder(library, features):
+def test_audio_blend_is_85_15(library, features):
     vectors = rag.embed_descriptions([rag.describe(s) for s in library], FakeEmbedder())
     audio = rag.audio_similarity(features, library)
     blended = rag.retrieve("reggaeton energy high", library, vectors, FakeEmbedder(), audio)
     for item in blended:
-        expected = 0.7 * item["text_similarity"] + 0.3 * item["audio_similarity"]
+        expected = 0.85 * item["text_similarity"] + 0.15 * item["audio_similarity"]
         assert item["score"] == pytest.approx(expected)
     scores = [item["score"] for item in blended]
     assert scores == sorted(scores, reverse=True)
@@ -134,10 +135,11 @@ def test_mock_mode_is_the_default_and_returns_3_to_5_retrieved_songs(library, fe
     assert result["source"] == "mock" and result["message"] is None
     assert 3 <= len(result["recommendations"]) <= 5
     for pick in result["recommendations"]:
-        assert pick["song"] in library and pick["reason"] and 0 <= pick["confidence"] <= 1
+        assert pick["song"] in library and pick["reason"] and 0 <= pick["retrieval_similarity"] <= 1
+        assert "confidence" not in pick
 
 
-def test_use_audio_false_gives_text_only_confidence(library, features):
+def test_use_audio_false_gives_text_only_similarity(library, features):
     result = ask("chill jazz", library, features, use_audio=False)
     assert result["use_audio"] is False and result["source"] == "mock"
 
@@ -172,7 +174,7 @@ def test_validate_response_drops_and_labels_bad_picks(library, caplog):
         {"deezer_id": ids[2], "why": "no_reason"}, {"deezer_id": "abc", "why": "bad_id"},
         {"deezer_id": ids[6], "why": "over_limit"}]
     assert "Hallucination" in caplog.text and "999999" in caplog.text
-    assert all(0 <= p["confidence"] <= 1 for p in checked["picks"])
+    assert all(0 <= p["retrieval_similarity"] <= 1 for p in checked["picks"])
 
 
 @pytest.mark.parametrize("text,error", [
@@ -373,3 +375,104 @@ def test_very_long_queries_are_truncated_in_the_log(library, features):
     entry = json.loads(rag.REQUEST_LOG_PATH.read_text().splitlines()[-1])
     assert entry["source"] == "rejected" and entry["query"].endswith("… (5000 chars)")
     assert len(entry["query"]) < 1100
+
+
+# ---------- relevance first: strong matches, taste as a tie-breaker ----------
+
+class FixedEmbedder:
+    """The query is always (1, 0); song vectors are made so their text similarity is exact."""
+
+    def __call__(self, texts):
+        return np.array([[1.0, 0.0]] * len(texts))
+
+
+def at_similarity(*similarities):
+    return np.array([[s, np.sqrt(1 - s * s)] for s in similarities])
+
+
+def ranked(library, text, audio, **kwargs):
+    retrieved = rag.retrieve("q", library, at_similarity(*text), FixedEmbedder(), audio, **kwargs)
+    return [item["song"]["deezer_id"] for item in retrieved], retrieved
+
+
+def test_taste_only_reorders_strong_matches(library, monkeypatch):
+    monkeypatch.setattr(rag, "STRONG_MATCH", 0.5)
+    songs = library[:5]
+    ids = [s["deezer_id"] for s in songs]
+    #           strong        strong        weak          weak          strong
+    text = [0.60, 0.58, 0.49, 0.45, 0.52]
+    audio = {ids[0]: 0.0, ids[1]: 1.0, ids[2]: 1.0, ids[3]: 0.0, ids[4]: 0.9}
+    order, retrieved = ranked(songs, text, audio, k=5)
+    # Among strong matches taste decides (0.85*.58+.15 > 0.85*.52+.135 > 0.85*.60); the weak
+    # ones follow in text order, even though song 2 sounds exactly like a liked song
+    assert order == [ids[1], ids[4], ids[0], ids[2], ids[3]]
+    assert [item["strong"] for item in retrieved] == [True, True, True, False, False]
+    assert rag.strong_count(retrieved) == 3 and rag.min_picks(retrieved) == 3
+
+
+def test_a_weak_match_never_outranks_a_strong_one_however_it_sounds(library, monkeypatch):
+    monkeypatch.setattr(rag, "STRONG_MATCH", 0.5)
+    songs = library[:2]
+    order, retrieved = ranked(songs, [0.50, 0.4999], {songs[0]["deezer_id"]: 0.0, songs[1]["deezer_id"]: 1.0}, k=2)
+    assert order == [songs[0]["deezer_id"], songs[1]["deezer_id"]]
+    assert retrieved[1]["score"] > retrieved[0]["score"]          # higher blend, still second
+
+
+def few_strong_setup(library, monkeypatch, strong=1):
+    """MiniLM-like scores: `strong` songs at 0.6, the rest at 0.42 (above the nonsense gate, below strong)."""
+    monkeypatch.setattr(rag, "STRONG_MATCH", 0.45)
+    monkeypatch.setattr(rag, "MIN_RELEVANCE", 0.40)
+    sims = [0.6] * strong + [0.42] * (len(library) - strong)
+    monkeypatch.setattr(rag, "embed_descriptions", lambda texts, embedder, cache=None: at_similarity(*sims))
+    return library[:strong]
+
+
+def test_few_strong_matches_tell_the_model_and_allow_a_shorter_answer(library, features, monkeypatch):
+    strong = few_strong_setup(library, monkeypatch, strong=2)
+    prompts = []
+    use_gemini(monkeypatch)
+
+    def fake(query, retrieved, model, api_key):
+        prompts.append(rag.user_prompt(query, retrieved))
+        return json.dumps({"recommendations": [{"deezer_id": strong[0]["deezer_id"], "reason": "Fits."}],
+                           "note": "Nothing else in your library is really chill.\nsecond line ignored"})
+
+    monkeypatch.setattr(rag, "gemini_response", fake)
+
+    result = ask("chill", library, features, embedder=FixedEmbedder())
+    assert "Few strong matches: only 2 of these songs" in prompts[0]
+    assert '"strong_match": true' in prompts[0] and '"strong_match": false' in prompts[0]
+    assert result["source"] == "gemini" and result["strong_matches"] == 2
+    assert [p["song"]["deezer_id"] for p in result["recommendations"]] == [strong[0]["deezer_id"]]
+    assert result["message"] == "Nothing else in your library is really chill."
+
+
+def test_few_strong_matches_get_a_default_note_if_the_model_gives_none(library, features, monkeypatch):
+    strong = few_strong_setup(library, monkeypatch, strong=1)
+    use_gemini(monkeypatch, response=json.dumps({"recommendations": [{"deezer_id": strong[0]["deezer_id"], "reason": "Fits."}]}))
+    result = ask("chill", library, features, embedder=FixedEmbedder())
+    assert len(result["recommendations"]) == 1
+    assert result["message"].startswith("No strong match in your library for this request: only 1 song fit")
+
+
+def test_enough_strong_matches_still_need_3_picks(library, features, monkeypatch):
+    strong = few_strong_setup(library, monkeypatch, strong=5)
+    use_gemini(monkeypatch, response=json.dumps({"recommendations": [{"deezer_id": strong[0]["deezer_id"], "reason": "Fits."}]}))
+    result = ask("chill", library, features, embedder=FixedEmbedder())
+    assert result["source"] == "fallback" and "(needs 3)" in result["message"]
+    assert len(result["recommendations"]) == 5
+
+
+def test_few_strong_fallback_does_not_pad_the_list(library, features, monkeypatch):
+    few_strong_setup(library, monkeypatch, strong=2)
+    use_gemini(monkeypatch, response="not json")
+    result = ask("chill", library, features, embedder=FixedEmbedder())
+    assert result["source"] == "fallback" and len(result["recommendations"]) == 2
+    assert "No strong match" in result["message"]
+
+
+def test_mock_mode_follows_the_few_strong_rule(library, features, monkeypatch):
+    few_strong_setup(library, monkeypatch, strong=1)
+    result = ask("chill", library, features, embedder=FixedEmbedder())
+    assert result["source"] == "mock" and len(result["recommendations"]) == 1
+    assert "no strong match" in result["message"]

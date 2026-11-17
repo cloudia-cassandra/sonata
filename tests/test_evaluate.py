@@ -6,10 +6,12 @@ import sonata.rag as rag
 from test_rag import FakeEmbedder
 
 
-def result(returned, retrieved=None, source="mock", message=None, dropped=()):
+def result(returned, retrieved=None, source="mock", message=None, dropped=(), strong=8):
     retrieved = list(range(1, 9)) if retrieved is None else retrieved
-    return {"recommendations": [{"song": {"deezer_id": i, "liked": False}, "confidence": 0.5} for i in returned],
-            "retrieved_ids": retrieved, "source": source, "message": message, "dropped": list(dropped)}
+    return {"recommendations": [{"song": {"deezer_id": i, "liked": False}, "retrieval_similarity": 0.5}
+                                for i in returned],
+            "retrieved_ids": retrieved, "strong_matches": strong, "source": source, "message": message,
+            "dropped": list(dropped)}
 
 
 def test_grounding():
@@ -32,6 +34,9 @@ def test_consistency_is_mean_pairwise_jaccard():
     (result([1, 2, 3], source="fallback", message="Daily limit reached"), "normal", True),
     (result([1, 2, 3], source="fallback"), "normal", False),          # fallback without a notice
     (result([1, 2]), "normal", False),                                 # too few songs
+    (result([1], strong=1, message="No strong match"), "normal", True),  # few strong: short answer, with a note
+    (result([1], strong=1), "normal", False),                          # ...but it must say so
+    (result([], strong=0, message="No strong match"), "normal", False),  # at least one song
     (result([], retrieved=[], source="rejected", message="Please type…"), "bad_input", True),
     (result([1, 2, 3], source="mock"), "bad_input", False),            # bad input was answered
     (result([1, 2, 3], source="fallback", message="Nothing matches"), "nonsense", True),
@@ -42,9 +47,9 @@ def test_graceful_handling(run, kind, expected):
     assert ev.handled_gracefully(run, kind) is expected
 
 
-def test_average_confidence_ignores_empty_answers():
-    assert ev.average_confidence([result([1, 2]), result([], source="rejected")]) == 0.5
-    assert ev.average_confidence([result([], source="rejected")]) is None
+def test_average_similarity_ignores_empty_answers():
+    assert ev.average_similarity([result([1, 2]), result([], source="rejected")]) == 0.5
+    assert ev.average_similarity([result([], source="rejected")]) is None
 
 
 def test_exceptions_are_recorded_not_raised():
