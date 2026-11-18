@@ -14,8 +14,15 @@ For "chill songs to study to," adding audio features made the results worse by m
 The comparison table still said it improved, because audio match measures similarity to the songs I like, not to the query. I found this by reading the results instead of relying on the numbers.
 
 ## AI Collaboration (one suggestion accepted, one rejected or changed)
-I used Claude to plan the project and understand each step, to decide how to prompt along the way, and I used an AI coding assistant to take along the process of building Sonata.
 
-A suggestion I accepted: using RAG as the required AI feature, since my recommender already did retrieval. I also accepted the plan to build in 2 layers (a terminal pipeline first, the web sky second), which meant a working, gradable project existed early.
+I used Claude to plan the project, understand each step and write my prompts, and an AI coding assistant to build Sonata from those prompts.
 
-Suggestions I rejected or changed: the coding assistant recommended creating about 50 simulated users for collaborative filtering. I declined, because my base project had no collaborative filtering, and invented data would have weakened the project. I also changed the first jitter settings for the star sky; they were too small to matter, so the sky still showed straight rows, and I asked for a more natural scatter. 
+**What I accepted**
+- Using RAG as the required AI feature, since my recommender already did retrieval.
+- Building in two layers: a terminal pipeline first, then the web sky, so a working, gradable project existed early.
+- An agentic workflow for mood labeling. While labeling songs by hand I realized I couldn't label all 379, so I proposed using an AI feature for the rest. I hand-labeled 57 songs, and with Claude's help we designed the flow: a model labels songs using some of my labels as examples, automatic checks flag unlikely labels, the model revises the flagged ones, and anything still uncertain comes to me. I kept some of my labels hidden as a test set to measure agreement with my own judgment.
+
+**What I rejected or changed**
+- The coding assistant recommended generating about 50 simulated users for collaborative filtering. I declined: my base project had no collaborative filtering, and invented data would have weakened the project.
+- The first ranking blended 70% text similarity with 30% similarity to my taste. Testing showed it pulled "chill songs to study to" toward songs I already like instead of songs that were chill, so I changed it to 85/15 and added a relevance threshold.
+- I didn't trust the model's mood labels as they came. After testing, I reviewed them and corrected 20 labels, for example "Did It First": the model called it [chill] and I'd call it [hype].
