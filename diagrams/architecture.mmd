@@ -1,38 +1,21 @@
 flowchart TD
-    subgraph DATA["Data · offline, run once"]
-        SRC["Spotify taste → Deezer previews → librosa analysis"] --> LIB[("379 songs<br/>audio features + labels")]
-    end
+    SPOTIFY["Spotify taste + Deezer previews"] --> ANALYZE["Audio analysis (librosa)<br/>features, labels, star maps"]
+    ANALYZE --> LIB[("Library<br/>379 songs + audio features")]
 
-    subgraph AGENT["Agentic workflow · mood labeling"]
-        HAND["Hand labels<br/>sonata.label"] -->|15 examples| LABEL["1 · Label<br/>Gemini, 25 songs per call"]
-        LABEL --> CHECK{"2 · Check<br/>4 rules, no model"}
-        CHECK -->|flagged| FIX["3 · Fix<br/>Gemini sees the evidence"]
-        FIX --> RECHECK{"Re-check"}
-        RECHECK -->|still flagged| REVIEW(["4 · Human review<br/>sonata.review"])
-        CHECK -->|ok| MOODS[("Song moods<br/>hand labels always win")]
-        RECHECK -->|ok| MOODS
-        REVIEW --> HAND
-        HAND --> MOODS
-    end
+    QUERY[/"User request"/] --> GUARD{"Input guardrail"}
+    GUARD -->|empty or over 500 characters| REJECT[/"Rejection message"/]
+    GUARD -->|ok| RETRIEVER["Retriever<br/>text similarity + taste, keeps 8"]
+    LIB --> RETRIEVER
+    RETRIEVER -->|best match below 0.40| FALLBACK["Retrieval-only fallback"]
+    RETRIEVER --> LLM["LLM (Gemini, mock by default)<br/>picks from the 8 songs, explains why"]
+    LLM -->|API error or daily quota| FALLBACK
+    LLM --> VALIDATOR["Validator<br/>drops invented and duplicate songs;<br/>too few left: fallback"]
+    VALIDATOR --> OUTPUT[/"Songs + reasons + retrieval similarity"/]
+    FALLBACK --> OUTPUT
+    OUTPUT -.-> LOG[("Logs<br/>every request")]
 
-    subgraph RAG["RAG workflow · sonata ask"]
-        Q[/"Request"/] --> RET["Retrieve 8 songs<br/>MiniLM: relevance first, 15% taste"]
-        RET --> LLM["Gemini picks 3-5 as JSON<br/>cache · 18 calls/day · mock by default"]
-        LLM --> VAL{"Guardrails<br/>only retrieved songs"}
-        VAL -->|valid| OUT[/"Songs + reasons<br/>+ retrieval similarity"/]
-        VAL -->|bad answer, API error,<br/>nothing matches| FB["Retrieval-only fallback"] --> OUT
-    end
-
-    subgraph REC["Content-based · sonata recommend"]
-        COS["Cosine on audio features<br/>vs. closest liked song"] --> TOP[/"Top 5 + why"/]
-    end
-
-    WEB["Web app · sonata.server<br/>galaxy · song skies · For you · Ask Sonata"]
-    EVAL["Evaluation<br/>reports/: RAG checks, agent vs. held-out hand labels"]
-
-    LIB --> HAND & LABEL & RET & COS
-    MOODS --> RET
-    OUT --> WEB
-    TOP --> WEB
-    OUT -.-> EVAL
-    MOODS -.-> EVAL
+    TESTS["Evaluation script + pytest<br/>grounding, consistency, bad input"] -->|runs queries| QUERY
+    TESTS -->|evaluation writes| REPORT[("Reports")]
+    REPORT --> HUMAN(["Human review"])
+    LOG --> HUMAN
+    HUMAN -.->|tune| RETRIEVER

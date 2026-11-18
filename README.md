@@ -12,12 +12,11 @@ Sonata grows out of **VibeCheck 1.0 (Music Recommender Simulation)**, my project
 
 ## Architecture Overview
 
-- **Data pipeline:** Spotify taste → Deezer previews → librosa features (28 per song), star maps and tempo/energy/brightness labels.
-- **`recommend`:** cosine similarity on standardized features, each candidate against its closest liked song.
-- **`ask`:** MiniLM retrieval (strong matches first, 85% text + 15% taste) keeps 8 songs; Gemini (or mock) picks from them as JSON; a validator drops anything not retrieved, with a cache, an 18-calls-a-day cap and a retrieval-only fallback.
-- **Moods:** hand labels, agent labels (label → check → fix → human review) and nearest-neighbor estimates are added to the song descriptions.
-- **Web UI and evaluation:** a FastAPI server shows the galaxy and song skies using the same functions; `evaluate` writes `reports/`.
-
+A request first passes an input guardrail that rejects empty or over-500-character text.
+The retriever then picks the 8 songs whose descriptions best match it (MiniLM text similarity, with 15% weight on sounding like my liked songs); if nothing scores above 0.40, Sonata skips the model and returns the closest songs with a notice.
+The LLM (Gemini, or mock mode by default; cached and capped at 18 calls a day) picks songs from those 8 and explains each one.
+A validator drops any song that wasn't retrieved or is duplicated, and an API error, exhausted quota or too few valid picks falls back to retrieval-only results.
+The output is the songs with their reasons and retrieval similarity, and every request is logged; pytest and the evaluation script check grounding, consistency and bad input, and I review the reports and logs to tune the retriever.
 Diagram: [diagrams/architecture.mmd](diagrams/architecture.mmd).
 
 ## Setup Instructions
@@ -130,3 +129,7 @@ after (audio re-rank):  Hours In Silence — Drake ♥ · redrum — 21 Savage �
 audio match 0.61 → 0.88, liked songs 1 → 2
 all 8 answered queries: audio match 0.65 → 0.79, 15% overlap with the text-only picks
 ```
+
+## Reflection
+
+Building Sonata taught me that a number going up doesn't mean the system got better. My RAG comparison showed audio match and confidence both improving, but when I read the actual picks for "chill songs to study to," they were worse than before. Those metrics measured similarity to my taste and to the query text, not whether a song was chill. That pushed me to add my own mood labels and measure against them. I also learned to design around constraints: with a 20-requests-a-day model limit, caching, a mock mode and a daily budget guard became part of the system. And using AI well meant treating its output as a draft to test against my own judgment, in small steps, instead of trusting it because it ran.
