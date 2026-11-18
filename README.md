@@ -103,6 +103,7 @@ $ python -m sonata ask 'dark rap for the gym'
 - **The LLM only picks from 8 retrieved songs:** every pick is checkable and a hallucinated song is easy to drop, but the model can never suggest a good song that retrieval missed.
 - **Built for about 20 free requests a day:** a disk cache, an 18-call daily cap, mock mode by default and a retrieval-only fallback keep it free and crash-proof, but real Gemini behavior gets tested far less often.
 - **Relevance first, taste second, scored by retrieval similarity:** taste (15%) only reorders songs that already match the request, and the score shown is retrieval similarity rather than a "confidence" the model can't calibrate, which makes answers more on-request but less personal.
+- **Audio effects in the browser, not in files:** speed, reverb and 8D use the Web Audio API on the preview as it plays, so nothing needs processing or storing, but nothing can be saved or exported either.
 
 ## Testing Summary
 
@@ -140,6 +141,13 @@ all 8 answered queries: audio match 0.65 → 0.79, 15% overlap with the text-onl
 4. **Human review:** songs still flagged wait for me in `python -m sonata.review`, where I accept or replace the moods. Hand labels always win over agent labels.
 
 Every step for every song is traced in `logs/agent_trace.jsonl`. The other hand-labeled songs are held out to score the model with and without examples, after the checks, and against a nearest-neighbor estimate, in `reports/label_eval.md`. A full run needs more than one day's 18 calls, so it stops when the budget runs out and resumes from the cache the next day.
+
+## Audio Effects Mixer
+
+- **What it does:** changes how a song's preview sounds in its sky: speed (0.5-1.5×), reverb (0-100%) and 8D (sound circling your head), with presets Normal, Slowed + Reverb, Sped up and 8D.
+- **How it works:** the Web Audio API in `web/fx.js`: the playback rate with pitch correction off (slower is lower, like "slowed" edits), a convolver with a generated 2.5-second echo for reverb, and a stereo panner swept left-right every 8 seconds for 8D. The stars stay in sync at any speed.
+- **How to use it:** start `python -m sonata.server`, open a song's sky, press Play, and use the panel at the bottom.
+- **Limitation:** it only changes playback of the 30-second previews in the browser and can't export audio.
 
 ## Reflection
 

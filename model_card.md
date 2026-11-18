@@ -5,6 +5,8 @@ The system only hears 30-second previews, so every audio feature describes a cli
 
 The star sky is an artistic rendering: pitch is the strongest note detected in a dense mix. The library comes from my own Spotify history and artists related to it, so it reflects one person's taste and mostly popular artists, and "chill" really means what I'd call chill. The library is small, so for some queries there simply aren't enough matches.
 
+The audio effects (speed, reverb, 8D) only apply to the 30-second previews, and 8D needs headphones to be heard as intended.
+
 ## Potential Misuse and Prevention
 The main risks are leaking credentials and exposing personal adta. I kept API keys in a git-ignored .env, ignored the Spotify token cache, and didn't commit the audio previews, which aren't mine to redistribute. The public repo does reveal which songs I like, so I curated that list before publishing. Free-text queries go to a language model, so I limit them to 500 characters, validate the model's JSON, and drop any song id it returns that wasn't retrieved, logging it as a hallucination. The system shouldn't be used to infer sensitive things about a person from their listening history, and it only works from data its owner chooses to provide.
 
