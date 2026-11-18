@@ -130,6 +130,17 @@ audio match 0.61 → 0.88, liked songs 1 → 2
 all 8 answered queries: audio match 0.65 → 0.79, 15% overlap with the text-only picks
 ```
 
+## Agentic Workflow: Mood Labeling
+
+`python -m sonata.label_agent` labels every song I haven't labeled by hand, in four steps:
+
+1. **Label:** Gemini labels batches of 25 songs (title, artist, genre, tempo/energy/brightness labels, stars per second) with 1-3 moods, a confidence and a reason, using 15 of my hand labels as examples. The JSON is validated, moods outside the vocabulary are dropped, and a failed batch is retried once.
+2. **Check:** without the model, a label is flagged if its moods contradict (chill with hype), its confidence is below 0.6, the song's numbers fall far outside my own labels' range for that mood, or none of its moods appear among its 5 most similar-sounding labeled songs.
+3. **Fix:** flagged songs go back to Gemini with the flags and evidence, to revise or confirm; the check runs again.
+4. **Human review:** songs still flagged wait for me in `python -m sonata.review`, where I accept or replace the moods. Hand labels always win over agent labels.
+
+Every step for every song is traced in `logs/agent_trace.jsonl`. The other hand-labeled songs are held out to score the model with and without examples, after the checks, and against a nearest-neighbor estimate, in `reports/label_eval.md`. A full run needs more than one day's 18 calls, so it stops when the budget runs out and resumes from the cache the next day.
+
 ## Reflection
 
 Building Sonata taught me that a number going up doesn't mean the system got better. My RAG comparison showed audio match and confidence both improving, but when I read the actual picks for "chill songs to study to," they were worse than before. Those metrics measured similarity to my taste and to the query text, not whether a song was chill. That pushed me to add my own mood labels and measure against them. I also learned to design around constraints: with a 20-requests-a-day model limit, caching, a mock mode and a daily budget guard became part of the system. And using AI well meant treating its output as a draft to test against my own judgment, in small steps, instead of trusting it because it ran.
